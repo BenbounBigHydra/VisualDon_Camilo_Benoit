@@ -11,7 +11,7 @@ Sources de données :
 
 ## But
 Le but de cette représentation est d'explorer la correlation possible entre la situation socio-économique d'une personne et le degré de connaissance de cette personne vis-à-vis de la musique savante (communément appelée musique classique). <br>
-L'objectif étant de vérifier une hypothèse que le degré de financement de la musique savante par rapport aux autres genre (rock, rap, techno) serait une forme de mépris de classe.
+_(L'objectif étant de vérifier une hypothèse que le degré de financement de la musique savante par rapport aux autres genre (rock, rap, techno) serait une forme de mépris de classe.)_
 
 ## Références
 
