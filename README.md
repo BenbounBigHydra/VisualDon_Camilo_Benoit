@@ -17,4 +17,5 @@ L'objectif étant de vérifier une hypothèse que le degré de financement de la
 
 * [Identifying Generational Gaps in Music](https://pudding.cool/2020/04/music-challenge/) : Utilise un fonctionnement similaire pour rassembler la data parmis les personnes qui visitent le site
 
+# 
 _[Consignes du projet](https://github.com/MediaComem/comem-visualdon/tree/main/projet#projet)_
