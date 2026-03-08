@@ -1,7 +1,7 @@
 # VisualDon_Camilo_Benoit
 
 ## Contexte
-_D'où viennent les données, qui les a créées et dans quel contexte ? Qui a décidé de les collecter, et pourquoi ? Quels biais ou absences peut-on identifier ?_
+_D'où viennent les données, qui les a créées et dans quel contexte ? Qui a décidé de les collecter, et pourquoi ? Quels biais ou absences peut-on identifier ?_<br>
 Les termes "musiques classiques" et "musiques savantes" seront régulièrement utilisées de manière confondues
 
 ## Description
@@ -16,5 +16,6 @@ L'objectif étant de vérifier une hypothèse que le degré de financement de la
 
 ## Références
 _Qui d'autre dans le web ou dans la recherche a utilisé ces données ou abordé ce sujet ? Dans quel but ? Cherchez des exemples sur des plateformes comme [The Pudding](https://pudding.cool/), dans la presse de données, ou dans des projets académiques._
+* [Identifying Generational Gaps in Music](https://pudding.cool/2020/04/music-challenge/) : Utilise un fonctionnement similaire pour rassembler la data parmis les personnes qui visitent le site
 
 ### [Consignes du projet](https://github.com/MediaComem/comem-visualdon/tree/main/projet#projet)
