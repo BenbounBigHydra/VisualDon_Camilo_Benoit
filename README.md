@@ -20,5 +20,8 @@ Le but de cette représentation est d'explorer l'impact de la musique savante, c
 
 * [Identifying Generational Gaps in Music](https://pudding.cool/2020/04/music-challenge/) : Utilise un fonctionnement similaire pour rassembler la data parmis les personnes qui visitent le site
 
+## User Flow & Wireframe
+[Lien du figma](https://www.figma.com/board/RgDgoJ2lp9OvmKoIbm7L47/VisualDon_UX?node-id=0-1&t=KX4CVLwm9DIAV8W0-1)
+
 # <!-- C'est juste pour avoir un séparateur -->
 _[Consignes du projet](https://github.com/MediaComem/comem-visualdon/tree/main/projet#projet)_
