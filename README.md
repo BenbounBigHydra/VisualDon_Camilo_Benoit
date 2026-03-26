@@ -14,7 +14,7 @@ Sources de données :
 
 
 ## But
-Le but de cette représentation est d'explorer l'impact de la musique savante, communément appelée musique classique, sur la société actuelle à travers le degré de connaissance de différentes oeuvres et compositeurs.trices classiques, ainsi que la corrélation possible entre la situation socio-économique d'une personne et le degré de connaissance de cette personne vis-à-vis de la musique savante.
+Le but de cette représentation est d'explorer l'impact de la musique savante, communément appelée musique classique, sur la société actuelle à travers le degré de connaissance de différentes oeuvres et compositeurs.trices classiques. Nous voulons comprendre la corrélation possible entre l'éducation musicale d'une personne ainsi que ses préférences musicales et le degré de connaissance de cette personne vis-à-vis de la musique savante.
 
 ## Références
 
