@@ -14,7 +14,7 @@ Sources de données :
 
 
 ## But
-Le but de cette représentation est d'explorer l'impact de la musique savante, communément appelée musique classique, sur la société actuelle à travers le degré de connaissance de différentes oeuvres et compositeurs.trices classiques, ainsi que la corrélation possible entre la situation socio-économique d'une personne et le degré de connaissance de cette personne vis-à-vis de la musique savante.
+Le but de cette représentation est d'explorer l'impact de la musique savante, communément appelée musique classique, sur la société actuelle à travers le degré de connaissance de différentes oeuvres et compositeurs.trices classiques. Nous voulons comprendre la corrélation possible entre l'éducation musicale d'une personne ainsi que ses préférences musicales et le degré de connaissance de cette personne vis-à-vis de la musique savante.
 
 ## Références
 
@@ -22,6 +22,9 @@ Le but de cette représentation est d'explorer l'impact de la musique savante, c
 
 ## User Flow & Wireframe
 [Lien du figma](https://www.figma.com/board/RgDgoJ2lp9OvmKoIbm7L47/VisualDon_UX?node-id=0-1&t=KX4CVLwm9DIAV8W0-1)
+
+## Base de données
+[UML de la DB](https://dbdiagram.io/d/visualDon_classique-69c50a5878c6c4bc7a735698)
 
 # <!-- C'est juste pour avoir un séparateur -->
 _[Consignes du projet](https://github.com/MediaComem/comem-visualdon/tree/main/projet#projet)_
