@@ -1,5 +1,5 @@
 // import { forceSimulation, select } from "d3";
-const API_BASE = 'https://classical.perplexus.ch/api/v1';
+import { API_BASE } from "../api.js";
 
 customElements.define("word-cloud", class extends HTMLElement {
     static observedAttributes = ['get-endpoint', 'post-endpoint'] 
@@ -14,10 +14,20 @@ customElements.define("word-cloud", class extends HTMLElement {
     }
 
     async getData() {
-        const res = await fetch(`${API_BASE}/${this.getAttribute('get-endpoint')}`, );
+        const res = await fetch(`${API_BASE}/${this.getAttribute('get-endpoint')}`);
         let data = await res.json();
         
         return data;
+    }
+
+    async sendForm() {
+        const res = await fetch(`${API_BASE}/${this.getAttribute('post-endpoint')}`, {
+            method: 'POST',
+            headers: {
+                "Accept" : "application/json",
+                "Authorization" : ""
+            }
+        })
     }
 
     getWord(el) {
@@ -51,6 +61,10 @@ customElements.define("word-cloud", class extends HTMLElement {
         return this.getAttribute('get-endpoint') === 'composers'? el.id : el;
     }
 
+    toggleActive(id) {
+        document.querySelector(`[for="${id}"]`).classList.toggle('active');
+    }
+
     async render() {
         const data = await this.getData();
         // console.log(data);
@@ -78,6 +92,12 @@ customElements.define("word-cloud", class extends HTMLElement {
                 >${word}</label>
             `
         });
+        cloud.addEventListener('click', (e) => {
+            // console.log(e.target);
+            if (e.target.tagName === 'INPUT') {
+                this.toggleActive(e.target.id);
+            }
+        })
         this.innerHTML = '';
         this.appendChild(cloud);
     }
