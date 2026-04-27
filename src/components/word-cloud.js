@@ -1,5 +1,5 @@
 // import { forceSimulation, select } from "d3";
-import { API_BASE } from "../api.js";
+import { addAnswered, API_BASE } from "../api.js";
 
 customElements.define("word-cloud", class extends HTMLElement {
     static observedAttributes = ['get-endpoint', 'post-endpoint'] 
@@ -25,9 +25,12 @@ customElements.define("word-cloud", class extends HTMLElement {
             method: 'POST',
             headers: {
                 "Accept" : "application/json",
-                "Authorization" : ""
+                "Authorization" : `UUID ${userUuid}`
             }
-        })
+        });
+        const data = await res.json();
+        console.log(data);
+        addAnswered(this.getAttribute('post-endpoint'));
     }
 
     getWord(el) {
