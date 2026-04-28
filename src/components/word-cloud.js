@@ -3,7 +3,7 @@ import { addAnswered, API_BASE } from "../api.js";
 
 customElements.define("word-cloud", class extends HTMLElement {
     static observedAttributes = ['get-endpoint', 'post-endpoint'] 
-    // expected values : genres, composers, education-levels (get) ; genres, known-composers, known-composer-titles, childhood-genres, current-genres
+    // expected values : genres, composers, education-levels (get) ; education-levels, known-composers, known-composer-titles, childhood-genres, current-genres
 
     connectedCallback() {
         this.render();
@@ -21,8 +21,11 @@ customElements.define("word-cloud", class extends HTMLElement {
     }
 
     async sendForm() {
+        const form = this.querySelector('form');
+        const formData = new FormData(form);
         const res = await fetch(`${API_BASE}/${this.getAttribute('post-endpoint')}`, {
             method: 'POST',
+            body: formData,
             headers: {
                 "Accept" : "application/json",
                 "Authorization" : `UUID ${userUuid}`

@@ -1,3 +1,7 @@
+img#scroll-arrow {
+    width: 200px;
+}
+
 .btn.btn-cloud, .btn.btn-cloud:hover, .btn.btn-intro, .btn.btn-intro:hover {
     background-color: rgb(255, 246, 224);
     border-color: orange;
