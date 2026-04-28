@@ -3,8 +3,8 @@ import { API_BASE, getUser } from "../api";
 customElements.define('blindtest-page', class extends HTMLElement {
     titles;
     
-    async connectedCallback() {
-        await this.render();
+    connectedCallback() {
+        this.render();
     }
 
     async loadTitles() {
@@ -13,7 +13,7 @@ customElements.define('blindtest-page', class extends HTMLElement {
                 "Accept" : "application/json"
             }
         });
-        const data = res.json();
+        const data = await res.json();
         this.titles = data;
     }
 
@@ -25,15 +25,15 @@ customElements.define('blindtest-page', class extends HTMLElement {
         do {
             const id = Math.floor(Math.random() * titles.length);
             title = titles[id];
-        } while (userTitles.includes(title))
+        } while (userTitles.includes(title));
         return title;
     }
 
     async render() {
         this.loadTitles();
-        const title = this.getRandomTitle();
-        // this.innerHTML = `
-        //     <blindtest-question title-id="${}"></blindtest-question>
-        // `
+        const title = await this.getRandomTitle();
+        this.innerHTML = `
+            <blindtest-question title-id="${title.id}"></blindtest-question>
+        `
     }
 })
