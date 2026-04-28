@@ -10,6 +10,10 @@ customElements.define('questions-page', class extends HTMLElement {
         const answered = getAnswered();
         console.log(user);
 
+        if (answered.includes('known-composer-titles')) {
+            window.location.replace('../../blindtest.html');
+        }
+
         this.innerHTML = `
             <h2></h2>
             <word-cloud></word-cloud>
@@ -18,11 +22,7 @@ customElements.define('questions-page', class extends HTMLElement {
         const title = this.querySelector('h2');
         const wordCloud = this.querySelector('word-cloud');
 
-        if (answered.includes('known-composers-title')) {
-
-            window.location.replace('../../blindtest.html')
-
-        } else if (answered.includes('known-composers')) {
+        if (answered.includes('known-composers')) {
 
             title.innerText = "Pour lesquels pourrais-tu donner le nom ou fredonner une oeuvre?";
             wordCloud.setAttribute('get-endpoint', 'composers');

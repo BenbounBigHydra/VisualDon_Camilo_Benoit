@@ -11,7 +11,7 @@ const getAnswered = () => {
 const addAnswered = (category) => {
     const answered = getAnswered();
     answered.push(category);
-    localStorage.setItem('answered', answered);
+    localStorage.setItem('answered', JSON.stringify(answered));
 }
 
 const getUser = async () => {

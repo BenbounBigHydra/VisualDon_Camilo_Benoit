@@ -1,5 +1,5 @@
 // import { forceSimulation, select } from "d3";
-import { addAnswered, API_BASE } from "../api.js";
+import { addAnswered, API_BASE, getUser, getUserUuid } from "../api.js";
 
 customElements.define("word-cloud", class extends HTMLElement {
     static observedAttributes = ['get-endpoint', 'post-endpoint'] 
@@ -23,17 +23,19 @@ customElements.define("word-cloud", class extends HTMLElement {
     async sendForm() {
         const form = this.querySelector('form');
         const formData = new FormData(form);
+        // console.log(formData);
         const res = await fetch(`${API_BASE}/${this.getAttribute('post-endpoint')}`, {
             method: 'POST',
             body: formData,
             headers: {
                 "Accept" : "application/json",
-                "Authorization" : `UUID ${userUuid}`
+                "Authorization" : `UUID ${getUserUuid()}`
             }
         });
         const data = await res.json();
         console.log(data);
         addAnswered(this.getAttribute('post-endpoint'));
+        return data;
     }
 
     getWord(el) {
@@ -72,7 +74,9 @@ customElements.define("word-cloud", class extends HTMLElement {
     }
 
     async render() {
-        const data = await this.getData();
+        const user = await getUser();
+        const data = this.getAttribute('post-endpoint') === 'known-composer-titles' ? user.known_composers : await this.getData();
+
         // console.log(data);
         // console.log(data.map(el => this.getWord(el)));
         // console.log(data.map(el => this.getPostValue(el)));
@@ -88,7 +92,7 @@ customElements.define("word-cloud", class extends HTMLElement {
                 <input 
                     type="checkbox" 
                     id="${value}"
-                    name="${this.getAttribute('post-endpoint')}[]"
+                    name="${this.getAttribute('get-endpoint')}[]"
                     value="${value}"
                     class="btn-check"
                 />
@@ -104,7 +108,16 @@ customElements.define("word-cloud", class extends HTMLElement {
                 this.toggleActive(e.target.id);
             }
         })
+
+        const butt = document.createElement('button');
+        butt.innerText = "envoyer";
+        butt.addEventListener('click', async () => {
+            const data = await this.sendForm();
+            window.location.reload();
+        });
+
         this.innerHTML = '';
         this.appendChild(cloud);
+        this.appendChild(butt);
     }
 })
