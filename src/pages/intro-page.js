@@ -29,8 +29,8 @@ customElements.define('intro-page', class extends HTMLElement {
             const canAccessResults = JSON.parse(localStorage.getItem('can_access_results')) === 'true';
             this.innerHTML += `
                 <div class="flex">
-                    <a class="btn border-2 rounded-0 btn-intro" href="../../questions.html">Blind Test</a>
-                    <a class="btn border-2 rounded-0 btn-intro ${canAccessResults? '' : 'disabled'}" ${canAccessResults? 'href="../../results.html"' : ''}>Résultats</a>
+                    <a class="btn border-2 rounded-0 btn-intro" href="../../blindtest.html">Blind Test</a>
+                    <a class="btn border-2 rounded-0 btn-intro ${canAccessResults ? '' : 'disabled'}" ${canAccessResults? 'href="../../results.html"' : ''}>Résultats</a>
             `
         }
         

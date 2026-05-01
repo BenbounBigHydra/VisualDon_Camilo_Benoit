@@ -22,10 +22,10 @@ customElements.define("blindtest-question", class extends HTMLElement {
         window.onSpotifyIframeApiReady = (IFrameAPI) => {
             const element = document.querySelector('#embed-iframe');
             const options = {
-                height: 200,
+                height: 0,
             };
             const callback = (EmbedController) => {
-                document.querySelector('iframe').allow = 'autoplay; clipboard-write; fullscreen; picture-in-picture';
+                document.querySelector('iframe').allow = '';
                 this.embedController = EmbedController;
                 document.querySelector('#play').addEventListener('click', EmbedController.play)
             }
@@ -41,7 +41,7 @@ customElements.define("blindtest-question", class extends HTMLElement {
             }
         });
         const title = await res.json();
-        console.log(title, this.embedController);
+        // console.log(title, this.embedController);
         this.embedController.loadUri(`spotify:track:${title.spotify_uri}`);
     }
 })
