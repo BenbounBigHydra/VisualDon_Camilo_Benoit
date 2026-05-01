@@ -12,5 +12,6 @@
     "vite": "^8.0.1"
   },
   "dependencies": {
+    "choices.js": "^11.2.3"
   }
 }

@@ -26,8 +26,29 @@ const getUser = async () => {
     return data;
 }
 
+const getComposers = async () => {
+    const res = await fetch(`${API_BASE}/composers`, {
+        headers: {
+            "Accept" : "application/json",
+        }
+    })
+    const data = await res.json();
+    return data;
+}
+
+const getTitles = async () => {
+    const res = await fetch(`${API_BASE}/titles`, {
+        headers: {
+            "Accept" : "application/json",
+        }
+    })
+    const data = await res.json();
+    return data;
+}
+
 const sendForm = async (form, endpoint) => {
     const formData = new FormData(form);
+    // console.log(form, formData);
     const res = await fetch(`${API_BASE}/${endpoint}`, {
         method: 'POST',
         body: formData,
@@ -39,4 +60,4 @@ const sendForm = async (form, endpoint) => {
     const data = res.json();
     return data;
 }
-export { API_BASE, getUserUuid, getUser, getAnswered, addAnswered, sendForm };
+export { API_BASE, getUserUuid, getUser, getAnswered, addAnswered, sendForm, getComposers, getTitles };

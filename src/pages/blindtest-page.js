@@ -33,8 +33,11 @@ customElements.define('blindtest-page', class extends HTMLElement {
         this.loadTitles();
         const title = await this.getRandomTitle();
         this.innerHTML = `
+            <div id="embed-iframe"></div>
+            <div id="listener"></div>
             <blindtest-question title-id="${title.id}"></blindtest-question>
         `
+        this.addEventListener('play_click', () => alert('1'))
     }
 
     loadClouds() {
