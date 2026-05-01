@@ -1,5 +1,5 @@
 // import { forceSimulation, select } from "d3";
-import { addAnswered, API_BASE, getUser, getUserUuid } from "../api.js";
+import { addAnswered, API_BASE, getUser, getUserUuid, sendForm } from "../api.js";
 
 customElements.define("word-cloud", class extends HTMLElement {
     static observedAttributes = ['get-endpoint', 'post-endpoint'] 
@@ -22,17 +22,7 @@ customElements.define("word-cloud", class extends HTMLElement {
 
     async sendForm() {
         const form = this.querySelector('form');
-        const formData = new FormData(form);
-        // console.log(formData);
-        const res = await fetch(`${API_BASE}/${this.getAttribute('post-endpoint')}`, {
-            method: 'POST',
-            body: formData,
-            headers: {
-                "Accept" : "application/json",
-                "Authorization" : `UUID ${getUserUuid()}`
-            }
-        });
-        const data = await res.json();
+        const data = sendForm(form, this.getAttribute('post-endpoint'));
         console.log(data);
         addAnswered(this.getAttribute('post-endpoint'));
         return data;

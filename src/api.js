@@ -25,4 +25,18 @@ const getUser = async () => {
     const data = await res.json();
     return data;
 }
-export { API_BASE, getUserUuid, getUser, getAnswered, addAnswered };
+
+const sendForm = async (form, endpoint) => {
+    const formData = new FormData(form);
+    const res = await fetch(`${API_BASE}/${endpoint}`, {
+        method: 'POST',
+        body: formData,
+        headers: {
+            "Accept" : "application/json",
+            "Authorization" : `UUID ${getUserUuid()}`
+        }
+    });
+    const data = res.json();
+    return data;
+}
+export { API_BASE, getUserUuid, getUser, getAnswered, addAnswered, sendForm };
