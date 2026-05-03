@@ -6,6 +6,7 @@ customElements.define("blindtest-question", class extends HTMLElement {
     static embedController
     static titles
     static composers
+    static currentTitle
 
     async connectedCallback() {
         this.loadSpotifyEmbed();
@@ -43,6 +44,8 @@ customElements.define("blindtest-question", class extends HTMLElement {
             }
         });
         const title = await res.json();
+        // this.currentTitle = title;
+        console.log(this.currentTitle)
         this.embedController.loadUri(`spotify:track:${title.spotify_uri}`);
     }
 
@@ -66,27 +69,46 @@ customElements.define("blindtest-question", class extends HTMLElement {
         return form;
     }
 
+    checkAnswer(composer, title) {
+        if (composer.value == this.currentTitle.composer_id) {
+            if (title.value == this.currentTitle.id) {
+                return 'bt-both';
+            } else {
+                return 'bt-composer';
+            }
+        } else {
+            if (title.value == this.currentTitle.id) {
+                return 'bt-title';
+            } else {
+                return 'bt-false';
+            }
+        }
+        // console.log(composer.value, this.currentTitle.composer_id);
+        // console.log(title.value, this.currentTitle.id);
+    }
+
     displayBT() {
         // document.querySelector('#buttons')
-        const form = document.createElement('form');
-        form.setAttribute('id', 'blindtest-try');
+        const answerForm = document.createElement('form');
+        answerForm.setAttribute('id', 'blindtest-try');
 
         const composerSelect = document.createElement('select');
-        const titleSelect = document.createElement('select');
-
+        composerSelect.setAttribute('id', 'composer-select');
         this.composers.forEach(composer => {
             composerSelect.innerHTML += `
                 <option value="${composer.id}">${composer.name}</option>
             `
         });
 
+        const titleSelect = document.createElement('select');
+        titleSelect.setAttribute('id', 'title-select');
         this.titles.forEach(title => {
             titleSelect.innerHTML += `
                 <option value="${title.id}">${title.name}</option>
             `
         });
 
-        form.append(composerSelect, titleSelect);
+        answerForm.append(composerSelect, titleSelect);
         
         const composerChoices = new Choices(composerSelect, {
             removeItemButton: true,
@@ -99,9 +121,20 @@ customElements.define("blindtest-question", class extends HTMLElement {
             itemSelectText: ''
         });
         
+        const inputsDiv = document.querySelector('#inputs');
+        inputsDiv.innerHTML = '';
+        inputsDiv.append(answerForm);
 
-        document.querySelector('#buttons').innerHTML = '';
-        document.querySelector('#buttons').append(form);
+        const validate = document.createElement('button');
+        validate.setAttribute('id', 'validate');
+        validate.innerText = 'Valider';
+        validate.addEventListener('click', async () => {
+            const form = this.createForm(this.checkAnswer(composerSelect, titleSelect));
+            // console.log(form);
+            const data = await sendForm(form, 'blindtest-results');
+        });
+
+        inputsDiv.append(validate);
 
     }
 
@@ -109,15 +142,15 @@ customElements.define("blindtest-question", class extends HTMLElement {
         this.innerHTML=`
             <h2>Connaissez/reconnaissez-vous cette oeuvre?</h2>
             <button id="play">play</button>
-            <div id="buttons">
+            <div id="inputs">
                 <button class="skip" id="unknown">Jamais entendu</button>
                 <button class="skip" id ="known">Déjà entendu, connais pas</button>
                 <button class="blindtest">connais, Blind Test !</button>     
             </div>
         `
-
         const listener = document.querySelector('#listener');
         document.querySelector('#play').addEventListener('click', () => listener.dispatchEvent(new CustomEvent('play_click')));
+
         document.querySelector('#unknown').addEventListener('click', async (e) => {
             const form = this.createForm(e.currentTarget.id);
             const data = await sendForm(form, 'blindtest-results');
