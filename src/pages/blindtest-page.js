@@ -36,7 +36,7 @@ customElements.define('blindtest-page', class extends HTMLElement {
 
         } else if (answered.includes('education-levels')) {
 
-            title.innerText = "Quels compositeurs parmi ceux-ci reconnais-tu?";
+            title.innerText = "Quels compositeurs parmi ceux-ci reconnais-tu de nom?";
             wordCloud.setAttribute('get-endpoint', 'composers');
             wordCloud.setAttribute('post-endpoint', 'known-composers');
 
