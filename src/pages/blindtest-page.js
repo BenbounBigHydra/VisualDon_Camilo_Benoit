@@ -13,22 +13,18 @@ customElements.define('blindtest-page', class extends HTMLElement {
         this.innerHTML = `
             <div id="embed-iframe"></div>
             <div id="listener"></div>
-            <div class="border border-primary rounded-3 p-4 shadow-sm bg-light mx-auto" style="width: 90%;">
-                <blindtest-question title-id=""></blindtest-question>
-            </div>
+            <blindtest-question title-id=""></blindtest-question>
         `
     }
 
     loadClouds() {
         const answered = getAnswered();
 
+        this.setAttribute('class', 'rounded-3 p-4 shadow-sm bg-light d-flex justify-content-center flex-column align-items-center');
         this.innerHTML = `
-            <div class="border border-primary rounded-3 p-4 shadow-sm bg-light mx-auto d-flex justify-content-center flex-column align-items-center" style="width: 90%;">
-                <h2></h2>
-                <word-cloud></word-cloud>
-                <img class="pt-3" style="max-height: 15vh;" id="scroll-arrow" src="./src/assets/Asset 1.svg" alt="flèche vers le bas">
-            </div>
-
+            <h2></h2>
+            <word-cloud></word-cloud>
+            <!-- <img class="pt-3" style="max-height: 15vh;" id="scroll-arrow" src="./src/assets/Asset 1.svg" alt="flèche vers le bas"> -->
         `;
         const title = this.querySelector('h2');
         const wordCloud = this.querySelector('word-cloud');

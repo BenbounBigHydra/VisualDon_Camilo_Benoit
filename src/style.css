@@ -3,6 +3,10 @@
     padding: 0;
 }
 
+body {
+    padding: 5%;
+}
+
 img#scroll-arrow {
     width: 200px;
 }

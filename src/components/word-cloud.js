@@ -92,10 +92,6 @@ customElements.define("word-cloud", class extends HTMLElement {
                 >${word}</label>
             `
         });
-        if (data.length<=3) {
-            cloud.classList.remove('flex-wrap');
-            cloud.classList.add('flex-column');
-        }
 
         cloud.addEventListener('click', (e) => {
             // console.log(e.target);
