@@ -199,8 +199,8 @@ customElements.define("blindtest-question", class extends HTMLElement {
                 <i id="play" class="bi bi-play-circle fs-1 ms-3"></i>
             </h2>
             <div id="inputs" class="d-flex flex-column justify-content-center align-items-center gap-3 my-5">
-                <button class="skip btn btn-custom border-2" id="unknown">Jamais entendu</button>
-                <button class="skip btn btn-custom border-2" id ="known">Déjà entendu, mais aucune idée de ce que c'est</button>
+                <button class="skip btn btn-custom border-2" id="unknown">Ça ne me dit rien</button>
+                <button class="skip btn btn-custom border-2" id ="known">J'ai déjà entendu, mais aucune idée de ce que c'est</button>
                 <button class="blindtest btn btn-custom border-2">Je connais le compositeur et/ou le titre, j'essaie le blind test</button>     
             </div>
         `
