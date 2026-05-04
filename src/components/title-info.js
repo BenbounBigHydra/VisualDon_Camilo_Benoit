@@ -14,39 +14,33 @@ customElements.define("title-info", class extends HTMLElement {
 
     getName(el) {
         switch (el) {
-                case "blues": return "Blues";
-                case "country": return "Country";
-                case "classical": return "Classique";
-                case "drum&bass": return "Drum & Bass";
-                case "edm": return "EDM";
-                case "hip-hop": return "Hip-Hop";
-                case "jazz": return "Jazz";
-                case "metal": return "Métal";
-                case "pop": return "Pop";
-                case "rap": return "Rap";
-                case "reggae": return "Reggae";
-                case "r&b": return "R&B";
-                case "rock": return "Rock";
-                case "techno": return "Techno";
-                case "world": return "Musiques du monde";
-                case "self-taught": return "Autodidacte";
-                case "conservatory": return "Conservatoire ou école de musique";
-                case "hem": return "Haute Ecole de Musique";
+            case "medieval" : return "Moyen-Âge"; break;
+            case "renaissance" : return "Renaissance"; break;
+            case "baroque" : return "Baroque"; break;
+            case "classical" : return "Classique"; break;
+            case "early_romantic" : return "Début du romantisme"; break;
+            case "romantic" : return "Romantisme"; break;
+            case "late_romantic" : return "Fin du romantisme"; break;
+            case "20th_century" : return "20e siècle"; break;
+            case "post-war" : return "Après-guerre"; break;
+            case "21st_century" : return "21e siècle"; break;
             }
     }
 
     async render() {
         this.infoTitle = await getTitle(this.getAttribute('title-id'));
         this.innerHTML = `
-            <div>
-                <h2>${this.infoTitle.name}</h2>
-                <p>composée par ${this.infoTitle.composer.name}</p>
-                <p>composée en ${this.infoTitle.release_year}, période ${this.getName(this.infoTitle.composer.period)}</p>
+            <div class="d-inline">
+                <h2>${this.infoTitle.name}
+                    <a class="ms-2" href="https://open.spotify.com/track/${this.infoTitle.spotify_uri}">
+                    <i class="bi bi-spotify fs-2"></i></a></h2>
+                <p class="mt-2 fs-5">composée par <span class="fw-semibold">${this.infoTitle.composer.name}</span><br/>composée en ${this.infoTitle.release_year}, (${this.getName(this.infoTitle.composer.period)})</p>
+                <img class="portrait" src="${this.infoTitle.composer.portrait_url}">
             </div>
             <p>${this.infoTitle.description}</p>
-            <a href="https://open.spotify.com/track/${this.infoTitle.spotify_uri}">écouter sur Spotify</a>
         `
         const button = document.createElement('button');
+        button.setAttribute('class', 'btn btn-custom border-2');
         button.innerText = "suivant";
         button.addEventListener('click', () => {
             this.parentElement.removeChild(this);

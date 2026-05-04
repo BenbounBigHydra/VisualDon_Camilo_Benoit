@@ -63,7 +63,7 @@ customElements.define('blindtest-page', class extends HTMLElement {
     async render() {
         const answered = getAnswered();
 
-        this.setAttribute('class', 'rounded-3 p-4 bg-light d-flex justify-content-center flex-column align-items-center');
+        this.setAttribute('class', 'rounded-3 p-4 bg-light border border-primary-subtle border-2 d-flex justify-content-center flex-column align-items-center');
 
         if (answered.includes('known-composer-titles')) {
             this.loadBlindTest();

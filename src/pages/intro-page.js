@@ -18,7 +18,7 @@ customElements.define('intro-page', class extends HTMLElement {
 
     async render() {
         
-        this.setAttribute('class', 'rounded-3 p-4 bg-light');
+        this.setAttribute('class', 'rounded-3 p-4 bg-light border border-primary-subtle border-2');
         this.innerHTML = `
             <h1>Classical Education</h1>
             <p>Le but de cette représentation est d'explorer l'impact de la musique savante, communément appelée musique classique, sur la société actuelle à travers le degré de connaissance de différentes oeuvres et compositeurs.trices classiques. Nous voulons comprendre la corrélation possible entre l'éducation musicale d'une personne ainsi que ses préférences musicales et le degré de connaissance de cette personne vis-à-vis de la musique savante.</p>

@@ -7,6 +7,14 @@ body {
     padding: 10% 5% 5%;
 }
 
+h1, h2 {
+    font-weight: 600;
+}
+
+img.portrait {
+    height: 100px;
+}
+
 img#scroll-arrow {
     width: 200px;
 }
