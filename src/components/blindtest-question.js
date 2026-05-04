@@ -1,21 +1,41 @@
 import Choices from "choices.js";
-import { API_BASE, getComposers, getTitles, sendForm } from "../api";
+import { API_BASE, getComposers, getTitles, getUser, sendForm } from "../api";
 
 customElements.define("blindtest-question", class extends HTMLElement {
     static observedAttributes = ['title-id']
     static embedController
     static titles
     static composers
+    static user
+    static currentTitle
 
     async connectedCallback() {
-        this.loadSpotifyEmbed();
-        this.composers = await getComposers();
-        this.titles = await getTitles();
+        await this.firstLoad();
         await this.render();
     }
 
     async attributeChangedCallback() {
         await this.render();
+    }
+
+    async firstLoad() {
+        this.loadSpotifyEmbed();
+        this.composers = await getComposers();
+        this.titles = await getTitles();
+        this.user = await getUser();
+        this.currentTitle = await this.getRandomTitle();
+        this.setAttribute('title-id', this.currentTitle.id);
+        this.addEventListener('loadnext', async () => {
+            this.currentTitle = await this.getRandomTitle();
+            this.setAttribute('title-id', this.currentTitle.id);
+        })
+    }
+
+    async displayInfo() {
+        this.innerHTML = "";
+        const info = document.createElement('title-info');
+        info.setAttribute('title-id', this.currentTitle.id);
+        this.parentElement.append(info);
     }
 
     loadSpotifyEmbed() {
@@ -35,6 +55,28 @@ customElements.define("blindtest-question", class extends HTMLElement {
         };
     }
 
+    checkContains(array, id) {
+        let arrayContainsId = false;
+        array.forEach(e => {
+            if (e.id == id) {
+                arrayContainsId = true;
+            }
+        });
+        return arrayContainsId;
+    }
+    
+    async getRandomTitle() {
+        const userTitles = this.user.listened_titles;
+        console.log(userTitles);
+        const titles = this.titles;
+        let title;
+        do {
+            const id = Math.floor(Math.random() * titles.length);
+            title = titles[id];
+            console.log(title.name, title.id, this.checkContains(userTitles, title.id))
+        } while (this.checkContains(userTitles, title.id));
+        return title;
+    }
 
     async loadTitle() {
         const res = await fetch(`${API_BASE}/titles/${this.getAttribute('title-id')}`, {
@@ -43,6 +85,8 @@ customElements.define("blindtest-question", class extends HTMLElement {
             }
         });
         const title = await res.json();
+        // this.currentTitle = title;
+        // console.log(this.currentTitle)
         this.embedController.loadUri(`spotify:track:${title.spotify_uri}`);
     }
 
@@ -66,42 +110,78 @@ customElements.define("blindtest-question", class extends HTMLElement {
         return form;
     }
 
+    checkAnswer(composer, title) {
+        console.log(composer.value, this.currentTitle.composer_id);
+        console.log(title.value, this.currentTitle.id);
+        if (composer.value == this.currentTitle.composer_id) {
+            if (title.value == this.currentTitle.id) {
+                return 'bt-both';
+            } else {
+                return 'bt-composer';
+            }
+        } else {
+            if (title.value == this.currentTitle.id) {
+                return 'bt-title';
+            } else {
+                return 'bt-false';
+            }
+        }
+    }
+
     displayBT() {
         // document.querySelector('#buttons')
-        const form = document.createElement('form');
-        form.setAttribute('id', 'blindtest-try');
+        const answerForm = document.createElement('form');
+        answerForm.setAttribute('id', 'blindtest-try');
 
         const composerSelect = document.createElement('select');
-        const titleSelect = document.createElement('select');
-
+        composerSelect.setAttribute('id', 'composer-select');
+        composerSelect.innerHTML = '<option value="0" />';
         this.composers.forEach(composer => {
             composerSelect.innerHTML += `
                 <option value="${composer.id}">${composer.name}</option>
             `
         });
 
+        const titleSelect = document.createElement('select');
+        titleSelect.setAttribute('id', 'title-select');
+        titleSelect.innerHTML = '<option value="0" />';
         this.titles.forEach(title => {
             titleSelect.innerHTML += `
                 <option value="${title.id}">${title.name}</option>
             `
         });
 
-        form.append(composerSelect, titleSelect);
+        answerForm.append(composerSelect, titleSelect);
         
         const composerChoices = new Choices(composerSelect, {
             removeItemButton: true,
             placeholderValue: 'Choissisez un compositeur',
-            itemSelectText: ''
+            itemSelectText: '',
+            searchResultLimit: -1
         });
         const titleChoices = new Choices(titleSelect, {
             removeItemButton: true,
             placeholderValue: 'Choissisez une oeuvre',
-            itemSelectText: ''
+            itemSelectText: '',
+            searchResultLimit: -1
         });
         
+        const inputsDiv = document.querySelector('#inputs');
+        inputsDiv.innerHTML = '';
+        inputsDiv.append(answerForm);
 
-        document.querySelector('#buttons').innerHTML = '';
-        document.querySelector('#buttons').append(form);
+        const validate = document.createElement('button');
+        validate.setAttribute('id', 'validate');
+        validate.innerText = 'Valider';
+        validate.addEventListener('click', async () => {
+            const form = this.createForm(this.checkAnswer(composerSelect, titleSelect));
+            // console.log(form);
+            const data = await sendForm(form, 'blindtest-results');
+            this.titles = await getTitles();
+            await this.displayInfo();
+        });
+
+        inputsDiv.append(validate);
 
     }
 
@@ -109,22 +189,26 @@ customElements.define("blindtest-question", class extends HTMLElement {
         this.innerHTML=`
             <h2>Connaissez/reconnaissez-vous cette oeuvre?</h2>
             <button id="play">play</button>
-            <div id="buttons">
+            <div id="inputs">
                 <button class="skip" id="unknown">Jamais entendu</button>
                 <button class="skip" id ="known">Déjà entendu, connais pas</button>
                 <button class="blindtest">connais, Blind Test !</button>     
             </div>
         `
-
         const listener = document.querySelector('#listener');
         document.querySelector('#play').addEventListener('click', () => listener.dispatchEvent(new CustomEvent('play_click')));
+
         document.querySelector('#unknown').addEventListener('click', async (e) => {
             const form = this.createForm(e.currentTarget.id);
             const data = await sendForm(form, 'blindtest-results');
+            this.titles = await getTitles();
+            await this.displayInfo();
         })
         document.querySelector('#known').addEventListener('click', async (e) => {
             const form = this.createForm(e.currentTarget.id);
             const data = await sendForm(form, 'blindtest-results');
+            this.titles = await getTitles();
+            await this.displayInfo();
         })
         document.querySelector('.blindtest').addEventListener('click', () => {this.displayBT()})
 

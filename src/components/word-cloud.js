@@ -109,7 +109,7 @@ customElements.define("word-cloud", class extends HTMLElement {
         butt.classList.add('border-2', 'rounded', 'mx-auto', 'p-2', 'd-block')
         butt.addEventListener('click', async () => {
             const data = await this.sendForm();
-            window.location.reload();
+            document.querySelector('body').innerHTML = '<blindtest-page />'
         });
 
         this.innerHTML = '';

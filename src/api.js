@@ -1,4 +1,5 @@
-const API_BASE = 'https://classical.perplexus.ch/api/v1';
+// const API_BASE = 'https://classical.perplexus.ch/api/v1';
+const API_BASE = 'http://localhost:8000/api/v1';
 
 const getUserUuid = () => {
     return JSON.parse(localStorage.getItem('user_uuid'));
@@ -36,6 +37,16 @@ const getComposers = async () => {
     return data;
 }
 
+const getTitle = async (id) => {
+    const res = await fetch(`${API_BASE}/titles/${id}`, {
+        headers: {
+            "Accept" : "application/json",
+        }
+    })
+    const data = await res.json();
+    return data;
+}
+
 const getTitles = async () => {
     const res = await fetch(`${API_BASE}/titles`, {
         headers: {
@@ -60,4 +71,4 @@ const sendForm = async (form, endpoint) => {
     const data = res.json();
     return data;
 }
-export { API_BASE, getUserUuid, getUser, getAnswered, addAnswered, sendForm, getComposers, getTitles };
+export { API_BASE, getUserUuid, getUser, getAnswered, addAnswered, sendForm, getComposers, getTitles, getTitle };
