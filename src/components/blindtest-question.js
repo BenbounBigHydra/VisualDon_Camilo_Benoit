@@ -111,6 +111,8 @@ customElements.define("blindtest-question", class extends HTMLElement {
     }
 
     checkAnswer(composer, title) {
+        console.log(composer.value, this.currentTitle.composer_id);
+        console.log(title.value, this.currentTitle.id);
         if (composer.value == this.currentTitle.composer_id) {
             if (title.value == this.currentTitle.id) {
                 return 'bt-both';
@@ -124,8 +126,6 @@ customElements.define("blindtest-question", class extends HTMLElement {
                 return 'bt-false';
             }
         }
-        // console.log(composer.value, this.currentTitle.composer_id);
-        // console.log(title.value, this.currentTitle.id);
     }
 
     displayBT() {
@@ -135,6 +135,7 @@ customElements.define("blindtest-question", class extends HTMLElement {
 
         const composerSelect = document.createElement('select');
         composerSelect.setAttribute('id', 'composer-select');
+        composerSelect.innerHTML = '<option value="0" />';
         this.composers.forEach(composer => {
             composerSelect.innerHTML += `
                 <option value="${composer.id}">${composer.name}</option>
@@ -143,6 +144,7 @@ customElements.define("blindtest-question", class extends HTMLElement {
 
         const titleSelect = document.createElement('select');
         titleSelect.setAttribute('id', 'title-select');
+        titleSelect.innerHTML = '<option value="0" />';
         this.titles.forEach(title => {
             titleSelect.innerHTML += `
                 <option value="${title.id}">${title.name}</option>
@@ -154,12 +156,14 @@ customElements.define("blindtest-question", class extends HTMLElement {
         const composerChoices = new Choices(composerSelect, {
             removeItemButton: true,
             placeholderValue: 'Choissisez un compositeur',
-            itemSelectText: ''
+            itemSelectText: '',
+            searchResultLimit: -1
         });
         const titleChoices = new Choices(titleSelect, {
             removeItemButton: true,
             placeholderValue: 'Choissisez une oeuvre',
-            itemSelectText: ''
+            itemSelectText: '',
+            searchResultLimit: -1
         });
         
         const inputsDiv = document.querySelector('#inputs');
