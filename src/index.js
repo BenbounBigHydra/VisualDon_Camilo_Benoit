@@ -8,3 +8,4 @@ import './components/blindtest-question.js'
 
 import './pages/intro-page.js'
 import './pages/blindtest-page.js'
+import './components/title-info.js'

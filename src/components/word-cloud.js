@@ -103,7 +103,7 @@ customElements.define("word-cloud", class extends HTMLElement {
         butt.innerText = "envoyer";
         butt.addEventListener('click', async () => {
             const data = await this.sendForm();
-            window.location.reload();
+            document.querySelector('body').innerHTML = '<blindtest-page />'
         });
 
         this.innerHTML = '';

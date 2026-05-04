@@ -25,11 +25,17 @@ customElements.define("blindtest-question", class extends HTMLElement {
         this.user = await getUser();
         this.currentTitle = await this.getRandomTitle();
         this.setAttribute('title-id', this.currentTitle.id);
+        this.addEventListener('loadnext', async () => {
+            this.currentTitle = await this.getRandomTitle();
+            this.setAttribute('title-id', this.currentTitle.id);
+        })
     }
 
     async displayInfo() {
-        this.currentTitle = await this.getRandomTitle();
-        this.setAttribute('title-id', this.currentTitle.id);
+        this.innerHTML = "";
+        const info = document.createElement('title-info');
+        info.setAttribute('title-id', this.currentTitle.id);
+        this.parentElement.append(info);
     }
 
     loadSpotifyEmbed() {
@@ -49,7 +55,7 @@ customElements.define("blindtest-question", class extends HTMLElement {
         };
     }
 
-    async checkContains(array, id) {
+    checkContains(array, id) {
         let arrayContainsId = false;
         array.forEach(e => {
             if (e.id == id) {
@@ -66,7 +72,6 @@ customElements.define("blindtest-question", class extends HTMLElement {
         do {
             const id = Math.floor(Math.random() * titles.length);
             title = titles[id];
-            console.log(userTitles.includes(title));
         } while (this.checkContains(userTitles, title.id));
         return title;
     }
@@ -79,7 +84,7 @@ customElements.define("blindtest-question", class extends HTMLElement {
         });
         const title = await res.json();
         // this.currentTitle = title;
-        console.log(this.currentTitle)
+        // console.log(this.currentTitle)
         this.embedController.loadUri(`spotify:track:${title.spotify_uri}`);
     }
 
