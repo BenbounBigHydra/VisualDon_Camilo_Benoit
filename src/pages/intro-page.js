@@ -17,26 +17,26 @@ customElements.define('intro-page', class extends HTMLElement {
     }
 
     async render() {
+        console.dir(this);
+
         this.innerHTML = `
-            <h1>Nom du Projet</h1>
-            <p>jsp jsp il faudra qu'on décide d'une intro - définition de musique classique ou savante - but du projet</p>
+            <div class="border border-primary rounded-3 p-4 shadow-sm bg-light mx-auto" style="width: 90%;">
+                <h1>Classical Education</h1>
+                <p>Le but de cette représentation est d'explorer l'impact de la musique savante, communément appelée musique classique, sur la société actuelle à travers le degré de connaissance de différentes oeuvres et compositeurs.trices classiques. Nous voulons comprendre la corrélation possible entre l'éducation musicale d'une personne ainsi que ses préférences musicales et le degré de connaissance de cette personne vis-à-vis de la musique savante.</p>
+                <p style="font-style: italic;">Le terme "musique classique" sera régulièrement utilisé dans ce projet pour désigner la "musique savante".</p>
+            </div>
         `
 
         let userUuid = getUserUuid();
 
         if (! userUuid) {
             this.setUserUuid();
-            // this.innerHTML += `
-            //     <p>Scrollez pour commencer !</p>
-            //     <img id="scroll-arrow" src="./src/assets/Asset 1.svg" alt="flèche vers le bas">
-            // `
         }
-        
         const canAccessResults = JSON.parse(localStorage.getItem('can_access_results')) === 'true';
-        this.innerHTML += `
-            <div class="flex">
-                <button id="bt-button" class="btn border-2 rounded-0 btn-intro">Blind Test</button>
-                <button id="results-button" class="btn border-2 rounded-0 btn-intro ${canAccessResults ? '' : 'disabled'}">Résultats</button>
+        this.firstElementChild.innerHTML += `
+            <div class="d-flex justify-content-center gap-5">
+                <button id="bt-button" class="btn border-2 btn-intro">Blind Test</button>
+                <button id="results-button" class="btn border-2 btn-intro ${canAccessResults ? '' : 'disabled'}">Résultats</button>
         `
         document.querySelector('#bt-button').addEventListener('click', () => {this.loadBlindTestPage()})
         

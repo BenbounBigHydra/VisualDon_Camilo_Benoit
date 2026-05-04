@@ -73,7 +73,7 @@ customElements.define("word-cloud", class extends HTMLElement {
 
         const cloud = document.createElement('form');
         cloud.setAttribute('id', this.getAttribute('post-endpoint'));
-        cloud.classList.add(['flex', 'flex-flow']);
+        cloud.classList.add('d-flex', 'flex-wrap', 'justify-content-center', 'gap-3', 'align-items-center', 'my-5');
 
         data.forEach(el => {
             const word = this.getWord(el);
@@ -88,10 +88,15 @@ customElements.define("word-cloud", class extends HTMLElement {
                 />
                 <label 
                     for="${value}"
-                    class="btn border-2 rounded-0 btn-cloud"
+                    class="btn border-2 btn-cloud"
                 >${word}</label>
             `
         });
+        if (data.length<=3) {
+            cloud.classList.remove('flex-wrap');
+            cloud.classList.add('flex-column');
+        }
+
         cloud.addEventListener('click', (e) => {
             // console.log(e.target);
             if (e.target.tagName === 'INPUT') {
@@ -101,6 +106,7 @@ customElements.define("word-cloud", class extends HTMLElement {
 
         const butt = document.createElement('button');
         butt.innerText = "envoyer";
+        butt.classList.add('border-2', 'rounded', 'mx-auto', 'p-2', 'd-block')
         butt.addEventListener('click', async () => {
             const data = await this.sendForm();
             document.querySelector('body').innerHTML = '<blindtest-page />'

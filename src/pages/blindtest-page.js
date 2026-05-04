@@ -13,7 +13,9 @@ customElements.define('blindtest-page', class extends HTMLElement {
         this.innerHTML = `
             <div id="embed-iframe"></div>
             <div id="listener"></div>
-            <blindtest-question title-id=""></blindtest-question>
+            <div class="border border-primary rounded-3 p-4 shadow-sm bg-light mx-auto" style="width: 90%;">
+                <blindtest-question title-id=""></blindtest-question>
+            </div>
         `
     }
 
@@ -21,9 +23,12 @@ customElements.define('blindtest-page', class extends HTMLElement {
         const answered = getAnswered();
 
         this.innerHTML = `
-            <h2></h2>
-            <word-cloud></word-cloud>
-            <img id="scroll-arrow" src="./src/assets/Asset 1.svg" alt="flèche vers le bas">
+            <div class="border border-primary rounded-3 p-4 shadow-sm bg-light mx-auto d-flex justify-content-center flex-column align-items-center" style="width: 90%;">
+                <h2></h2>
+                <word-cloud></word-cloud>
+                <img class="pt-3" style="max-height: 15vh;" id="scroll-arrow" src="./src/assets/Asset 1.svg" alt="flèche vers le bas">
+            </div>
+
         `;
         const title = this.querySelector('h2');
         const wordCloud = this.querySelector('word-cloud');
@@ -42,7 +47,7 @@ customElements.define('blindtest-page', class extends HTMLElement {
 
         } else if (answered.includes('current-genres')) {
 
-            title.innerText = "question education musicale?";
+            title.innerText = "Quelle éducation musicale as-tu reçu ?";
             wordCloud.setAttribute('get-endpoint', 'education-levels');
             wordCloud.setAttribute('post-endpoint', 'education-levels');
 
