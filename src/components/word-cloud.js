@@ -88,7 +88,7 @@ customElements.define("word-cloud", class extends HTMLElement {
                 />
                 <label 
                     for="${value}"
-                    class="btn border-2 btn-cloud"
+                    class="btn border-2 btn-custom"
                 >${word}</label>
             `
         });

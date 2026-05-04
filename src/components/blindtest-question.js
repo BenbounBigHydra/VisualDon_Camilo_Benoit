@@ -132,10 +132,11 @@ customElements.define("blindtest-question", class extends HTMLElement {
         // document.querySelector('#buttons')
         const answerForm = document.createElement('form');
         answerForm.setAttribute('id', 'blindtest-try');
+        answerForm.setAttribute('class', 'w-100 d-flex gap-3')
 
         const composerSelect = document.createElement('select');
         composerSelect.setAttribute('id', 'composer-select');
-        composerSelect.innerHTML = '<option value="0" />';
+        composerSelect.innerHTML = '<option value="0" hidden/>';
         this.composers.forEach(composer => {
             composerSelect.innerHTML += `
                 <option value="${composer.id}">${composer.name}</option>
@@ -144,7 +145,7 @@ customElements.define("blindtest-question", class extends HTMLElement {
 
         const titleSelect = document.createElement('select');
         titleSelect.setAttribute('id', 'title-select');
-        titleSelect.innerHTML = '<option value="0" />';
+        titleSelect.innerHTML = '<option value="0" hidden/>';
         this.titles.forEach(title => {
             titleSelect.innerHTML += `
                 <option value="${title.id}">${title.name}</option>
@@ -165,6 +166,10 @@ customElements.define("blindtest-question", class extends HTMLElement {
             itemSelectText: '',
             searchResultLimit: -1
         });
+
+        answerForm.childNodes.forEach((node) => {
+            node.classList.add('w-100');
+        })
         
         const inputsDiv = document.querySelector('#inputs');
         inputsDiv.innerHTML = '';
@@ -172,6 +177,7 @@ customElements.define("blindtest-question", class extends HTMLElement {
 
         const validate = document.createElement('button');
         validate.setAttribute('id', 'validate');
+        validate.setAttribute('class', 'btn btn-custom border-2');
         validate.innerText = 'Valider';
         validate.addEventListener('click', async () => {
             const form = this.createForm(this.checkAnswer(composerSelect, titleSelect));
@@ -186,13 +192,16 @@ customElements.define("blindtest-question", class extends HTMLElement {
     }
 
     async render() {
+        //'d-flex', 'flex-wrap', 'justify-content-center', 'gap-3', 'align-items-center', 'my-5'
         this.innerHTML=`
-            <h2>Connaissez/reconnaissez-vous cette oeuvre?</h2>
-            <button id="play">play</button>
-            <div id="inputs">
-                <button class="skip" id="unknown">Jamais entendu</button>
-                <button class="skip" id ="known">Déjà entendu, connais pas</button>
-                <button class="blindtest">connais, Blind Test !</button>     
+            <h2 class="mb-0">
+                Connaissez/reconnaissez-vous cette oeuvre?
+                <i id="play" class="bi bi-play-circle fs-1 ms-3"></i>
+            </h2>
+            <div id="inputs" class="d-flex flex-column justify-content-center align-items-center gap-3 my-5">
+                <button class="skip btn btn-custom border-2" id="unknown">Jamais entendu</button>
+                <button class="skip btn btn-custom border-2" id ="known">Déjà entendu, connais pas</button>
+                <button class="blindtest btn btn-custom border-2">connais, Blind Test !</button>     
             </div>
         `
         const listener = document.querySelector('#listener');

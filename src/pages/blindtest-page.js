@@ -20,7 +20,6 @@ customElements.define('blindtest-page', class extends HTMLElement {
     loadClouds() {
         const answered = getAnswered();
 
-        this.setAttribute('class', 'rounded-3 p-4 shadow-sm bg-light d-flex justify-content-center flex-column align-items-center');
         this.innerHTML = `
             <h2></h2>
             <word-cloud></word-cloud>
@@ -63,6 +62,8 @@ customElements.define('blindtest-page', class extends HTMLElement {
 
     async render() {
         const answered = getAnswered();
+
+        this.setAttribute('class', 'rounded-3 p-4 bg-light d-flex justify-content-center flex-column align-items-center');
 
         if (answered.includes('known-composer-titles')) {
             this.loadBlindTest();

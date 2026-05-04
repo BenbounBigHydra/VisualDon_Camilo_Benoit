@@ -4,23 +4,25 @@
 }
 
 body {
-    padding: 5%;
+    padding: 10% 5% 5%;
 }
 
 img#scroll-arrow {
     width: 200px;
 }
 
-.btn.btn-cloud, .btn.btn-cloud:hover, .btn.btn-intro, .btn.btn-intro:hover {
+.btn.btn-custom, .btn.btn-custom:hover {
     background-color: rgb(255, 246, 224);
     border-color: orange;
     color: orange;
+    font-weight: 600;
 }
 
-.btn.btn-cloud.active, .btn.btn-cloud.active:hover {
+.btn.btn-custom.active, .btn.btn-custom.active:hover {
     background-color: rgb(246, 212, 217);
     border-color: rgb(255, 117, 182);
     color: rgb(255, 117, 182);
+    font-weight: 600;
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
