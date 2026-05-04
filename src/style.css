@@ -1,3 +1,8 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
 img#scroll-arrow {
     width: 200px;
 }
@@ -12,4 +17,15 @@ img#scroll-arrow {
     background-color: rgb(246, 212, 217);
     border-color: rgb(255, 117, 182);
     color: rgb(255, 117, 182);
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+*::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+* {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
