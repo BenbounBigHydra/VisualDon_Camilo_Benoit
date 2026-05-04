@@ -67,11 +67,13 @@ customElements.define("blindtest-question", class extends HTMLElement {
     
     async getRandomTitle() {
         const userTitles = this.user.listened_titles;
+        console.log(userTitles);
         const titles = this.titles;
         let title;
         do {
             const id = Math.floor(Math.random() * titles.length);
             title = titles[id];
+            console.log(title.name, title.id, this.checkContains(userTitles, title.id))
         } while (this.checkContains(userTitles, title.id));
         return title;
     }
@@ -171,6 +173,7 @@ customElements.define("blindtest-question", class extends HTMLElement {
             const form = this.createForm(this.checkAnswer(composerSelect, titleSelect));
             // console.log(form);
             const data = await sendForm(form, 'blindtest-results');
+            this.titles = await getTitles();
             await this.displayInfo();
         });
 
@@ -194,11 +197,13 @@ customElements.define("blindtest-question", class extends HTMLElement {
         document.querySelector('#unknown').addEventListener('click', async (e) => {
             const form = this.createForm(e.currentTarget.id);
             const data = await sendForm(form, 'blindtest-results');
+            this.titles = await getTitles();
             await this.displayInfo();
         })
         document.querySelector('#known').addEventListener('click', async (e) => {
             const form = this.createForm(e.currentTarget.id);
             const data = await sendForm(form, 'blindtest-results');
+            this.titles = await getTitles();
             await this.displayInfo();
         })
         document.querySelector('.blindtest').addEventListener('click', () => {this.displayBT()})
