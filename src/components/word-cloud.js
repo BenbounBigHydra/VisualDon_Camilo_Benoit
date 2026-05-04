@@ -23,7 +23,7 @@ customElements.define("word-cloud", class extends HTMLElement {
     async sendForm() {
         const form = this.querySelector('form');
         const data = await sendForm(form, this.getAttribute('post-endpoint'));
-        console.log(data);
+        // console.log(data);
         addAnswered(this.getAttribute('post-endpoint'));
         return data;
     }

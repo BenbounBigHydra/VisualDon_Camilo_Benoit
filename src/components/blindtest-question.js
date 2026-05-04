@@ -67,13 +67,13 @@ customElements.define("blindtest-question", class extends HTMLElement {
     
     async getRandomTitle() {
         const userTitles = this.user.listened_titles;
-        console.log(userTitles);
+        // console.log(userTitles);
         const titles = this.titles;
         let title;
         do {
             const id = Math.floor(Math.random() * titles.length);
             title = titles[id];
-            console.log(title.name, title.id, this.checkContains(userTitles, title.id))
+            // console.log(title.name, title.id, this.checkContains(userTitles, title.id))
         } while (this.checkContains(userTitles, title.id));
         return title;
     }
@@ -111,8 +111,8 @@ customElements.define("blindtest-question", class extends HTMLElement {
     }
 
     checkAnswer(composer, title) {
-        console.log(composer.value, this.currentTitle.composer_id);
-        console.log(title.value, this.currentTitle.id);
+        // console.log(composer.value, this.currentTitle.composer_id);
+        // console.log(title.value, this.currentTitle.id);
         if (composer.value == this.currentTitle.composer_id) {
             if (title.value == this.currentTitle.id) {
                 return 'bt-both';
