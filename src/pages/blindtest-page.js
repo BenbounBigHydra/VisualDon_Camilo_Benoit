@@ -7,37 +7,14 @@ customElements.define('blindtest-page', class extends HTMLElement {
         await this.render();
     }
 
-    async loadTitles() {
-        const res = await fetch(`${API_BASE}/titles`, {
-            headers: {
-                "Accept" : "application/json"
-            }
-        });
-        const data = await res.json();
-        this.titles = data;
-    }
-
-    async getRandomTitle() {
-        const user = await getUser();
-        const userTitles = user.listened_titles;
-        const titles = this.titles;
-        let title;
-        do {
-            const id = Math.floor(Math.random() * titles.length);
-            title = titles[id];
-        } while (userTitles.includes(title));
-        return title;
-    }
-
     async loadBlindTest() {
-        this.loadTitles();
-        const title = await this.getRandomTitle();
+        // this.loadTitles();
+        // const title = await this.getRandomTitle();
         this.innerHTML = `
             <div id="embed-iframe"></div>
             <div id="listener"></div>
-            <blindtest-question title-id="${title.id}"></blindtest-question>
+            <blindtest-question title-id=""></blindtest-question>
         `
-        this.addEventListener('play_click', () => alert('1'))
     }
 
     loadClouds() {

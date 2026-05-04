@@ -1,5 +1,6 @@
 import './api.js'
 
+// import "choices.js/public/assets/styles/base.css"
 import "choices.js/public/assets/styles/choices.css";
 
 import './components/word-cloud.js'

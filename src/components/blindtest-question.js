@@ -1,22 +1,35 @@
 import Choices from "choices.js";
-import { API_BASE, getComposers, getTitles, sendForm } from "../api";
+import { API_BASE, getComposers, getTitles, getUser, sendForm } from "../api";
 
 customElements.define("blindtest-question", class extends HTMLElement {
     static observedAttributes = ['title-id']
     static embedController
     static titles
     static composers
+    static user
     static currentTitle
 
     async connectedCallback() {
-        this.loadSpotifyEmbed();
-        this.composers = await getComposers();
-        this.titles = await getTitles();
+        await this.firstLoad();
         await this.render();
     }
 
     async attributeChangedCallback() {
         await this.render();
+    }
+
+    async firstLoad() {
+        this.loadSpotifyEmbed();
+        this.composers = await getComposers();
+        this.titles = await getTitles();
+        this.user = await getUser();
+        this.currentTitle = await this.getRandomTitle();
+        this.setAttribute('title-id', this.currentTitle.id);
+    }
+
+    async displayInfo() {
+        this.currentTitle = await this.getRandomTitle();
+        this.setAttribute('title-id', this.currentTitle.id);
     }
 
     loadSpotifyEmbed() {
@@ -36,6 +49,27 @@ customElements.define("blindtest-question", class extends HTMLElement {
         };
     }
 
+    async checkContains(array, id) {
+        let arrayContainsId = false;
+        array.forEach(e => {
+            if (e.id == id) {
+                arrayContainsId = true;
+            }
+        });
+        return arrayContainsId;
+    }
+    
+    async getRandomTitle() {
+        const userTitles = this.user.listened_titles;
+        const titles = this.titles;
+        let title;
+        do {
+            const id = Math.floor(Math.random() * titles.length);
+            title = titles[id];
+            console.log(userTitles.includes(title));
+        } while (this.checkContains(userTitles, title.id));
+        return title;
+    }
 
     async loadTitle() {
         const res = await fetch(`${API_BASE}/titles/${this.getAttribute('title-id')}`, {
@@ -132,6 +166,7 @@ customElements.define("blindtest-question", class extends HTMLElement {
             const form = this.createForm(this.checkAnswer(composerSelect, titleSelect));
             // console.log(form);
             const data = await sendForm(form, 'blindtest-results');
+            await this.displayInfo();
         });
 
         inputsDiv.append(validate);
@@ -154,10 +189,12 @@ customElements.define("blindtest-question", class extends HTMLElement {
         document.querySelector('#unknown').addEventListener('click', async (e) => {
             const form = this.createForm(e.currentTarget.id);
             const data = await sendForm(form, 'blindtest-results');
+            await this.displayInfo();
         })
         document.querySelector('#known').addEventListener('click', async (e) => {
             const form = this.createForm(e.currentTarget.id);
             const data = await sendForm(form, 'blindtest-results');
+            await this.displayInfo();
         })
         document.querySelector('.blindtest').addEventListener('click', () => {this.displayBT()})
 
