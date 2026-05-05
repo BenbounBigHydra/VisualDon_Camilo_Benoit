@@ -6,6 +6,9 @@ import "choices.js/public/assets/styles/choices.css";
 import './components/word-cloud.js'
 import './components/blindtest-question.js'
 import './components/title-info.js'
+import './components/results-cloud.js'
+import './components/stat-display.js'
+import './components/timeline-display.js'
 
 import './pages/intro-page.js'
 import './pages/blindtest-page.js'

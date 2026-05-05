@@ -71,4 +71,8 @@ const sendForm = async (form, endpoint) => {
     const data = res.json();
     return data;
 }
-export { API_BASE, getUserUuid, getUser, getAnswered, addAnswered, sendForm, getComposers, getTitles, getTitle };
+
+const composers = await getComposers();
+const titles = await getTitles();
+
+export { API_BASE, getUserUuid, getUser, getAnswered, addAnswered, sendForm, getComposers, getTitles, getTitle, composers, titles };
