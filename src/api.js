@@ -68,11 +68,25 @@ const sendForm = async (form, endpoint) => {
             "Authorization" : `UUID ${getUserUuid()}`
         }
     });
-    const data = res.json();
+    const data = await res.json();
+    return data;
+}
+
+const getStats = async (endpoint, id) => {
+    let url = `${API_BASE}/${endpoint}`;
+    url += endpoint === 'blindtest'? '' : `/${id}`;
+    url += '/stats';
+    
+    const res = await fetch(url, {
+        headers: {
+            "Accept" : "application/json"
+        }
+    });
+    const data = await res.json();
     return data;
 }
 
 const composers = await getComposers();
 const titles = await getTitles();
 
-export { API_BASE, getUserUuid, getUser, getAnswered, addAnswered, sendForm, getComposers, getTitles, getTitle, composers, titles };
+export { API_BASE, getUserUuid, getUser, getAnswered, addAnswered, sendForm, getComposers, getTitles, getTitle, composers, titles, getStats };

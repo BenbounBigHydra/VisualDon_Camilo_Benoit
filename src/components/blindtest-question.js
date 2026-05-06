@@ -1,5 +1,5 @@
 import Choices from "choices.js";
-import { API_BASE, getComposers, getTitles, getUser, sendForm, titles } from "../api";
+import { API_BASE, getComposers, getTitles, getUser, sendForm, titles, composers } from "../api";
 
 customElements.define("blindtest-question", class extends HTMLElement {
     static observedAttributes = ['title-id']

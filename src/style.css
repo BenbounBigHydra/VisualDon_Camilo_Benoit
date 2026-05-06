@@ -33,6 +33,35 @@ img#scroll-arrow {
     font-weight: 600;
 }
 
+.stat-box {
+    width: calc(116px + 1rem);
+}
+
+.cell {
+    height: 20px;
+    width: 20px;
+    border-radius: 10%;
+}
+
+.unknown {
+    background-color: red;
+}
+.known {
+    background-color: blue;
+}
+.bt-false {
+    background-color: skyblue;
+}
+.bt-composer {
+    background-color: yellow;
+}
+.bt-title {
+    background-color: lemonchiffon;
+}
+.bt-both {
+    background-color: pink;
+}
+
 /* Hide scrollbar for Chrome, Safari and Opera */
 *::-webkit-scrollbar {
   display: none;
