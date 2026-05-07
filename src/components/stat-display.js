@@ -1,7 +1,7 @@
 import { getStats, getUser } from "../api";
 
 customElements.define("stat-display", class extends HTMLElement {
-    static observedAttributes = ['filter', 'labels']
+    static observedAttributes = ['filter', 'labels', 'message']
     // filter : self (stats perso), all, self-taught, conservatory, hem, (vue générale), "title-id" (stats oeuvre)
 
     async connectedCallback() {
@@ -23,7 +23,7 @@ customElements.define("stat-display", class extends HTMLElement {
         const btBoth = total > max? Math.round(stats['bt-both']*max/total) : stats['bt-both'];
 
         const box = document.createElement('div');
-        box.setAttribute('class', 'd-flex flex-wrap-reverse align-content-start stat-box');
+        box.setAttribute('class', 'd-flex flex-wrap-reverse align-content-start stat-box p-1 border rounded border-2');
 
         for (let index = 0; index < unknown; index++) {
             box.innerHTML += '<div class="cell unknown"></div>';
@@ -61,40 +61,45 @@ customElements.define("stat-display", class extends HTMLElement {
         labels.innerHTML = `
             <div class="d-flex align-items-center gap-2">
                 <div class="cell bt-both"></div>
-                <p class="m-0">Deviné le compositeur et le titre : ${stats['bt-both']} personnes (${stats['bt-both']*100/total}%)</p>
+                <p class="m-0">Deviné le compositeur et le titre : ${stats['bt-both']} personnes (${Math.round(stats['bt-both']*100/total)}%)</p>
             </div>
 
             <div class="d-flex align-items-center gap-2">
                 <div class="cell bt-title"></div>
-                <p class="m-0">Deviné le titre : ${stats['bt-title']} personnes (${stats['bt-title']*100/total}%)</p>
+                <p class="m-0">Deviné le titre : ${stats['bt-title']} personnes (${Math.round(stats['bt-title']*100/total)}%)</p>
             </div>
 
             <div class="d-flex align-items-center gap-2">
                 <div class="cell bt-composer"></div>
-                <p class="m-0">Deviné le compositeur : ${stats['bt-composer']} personnes (${stats['bt-composer']*100/total}%)</p>
+                <p class="m-0">Deviné le compositeur : ${stats['bt-composer']} personnes (${Math.round(stats['bt-composer']*100/total)}%)</p>
             </div>
 
             <div class="d-flex align-items-center gap-2">
                 <div class="cell bt-false"></div>
-                <p class="m-0">Deviné ni le compositeur ni le titre : ${stats['bt-false']} personnes (${stats['bt-false']*100/total}%)</p>
+                <p class="m-0">Deviné ni le compositeur ni le titre : ${stats['bt-false']} personnes (${Math.round(stats['bt-false']*100/total)}%)</p>
             </div>
 
             <div class="d-flex align-items-center gap-2">
                 <div class="cell known"></div>
-                <p class="m-0">Déjà entendu : ${stats['known']} personnes (${stats['known']*100/total}%)</p>
+                <p class="m-0">Déjà entendu : ${stats['known']} personnes (${Math.round(stats['known']*100/total)}%)</p>
             </div>
 
             <div class="d-flex align-items-center gap-2">
                 <div class="cell unknown"></div>
-                <p class="m-0">Jamais entendu : ${stats['unknown']} personnes (${stats['unknown']*100/total}%)</p>
+                <p class="m-0">Jamais entendu : ${stats['unknown']} personnes (${Math.round(stats['unknown']*100/total)}%)</p>
             </div>
         `
 
         return labels;
     }
 
-    async loadTitleStats(id) {
+    async loadTitleStats(id) {    
+        let checkId = (el) => {
+            return el['id'] == this.getAttribute('filter').slice(6);;
+        }
+        
         const user = await getUser();
+        const userResult = user['listened_titles'].find((el) => checkId(el))['pivot']['result'];
         const stats = await getStats('titles', id);
 
         // Pour tester l'affichage
@@ -107,12 +112,29 @@ customElements.define("stat-display", class extends HTMLElement {
         //     'bt-both': 23,
         // };
         // const waffle = this.createWaffle(120, test, 'bt-composer');
-        
+
         const waffle = this.createWaffle(120, stats);
         const labels = this.createLabels(stats);
 
         const box = document.createElement('div');
-        box.setAttribute('class', 'd-flex gap-2 p-1 align-items-center justify-content-end')
+        box.setAttribute('class', 'd-flex gap-4 p-1 align-items-center justify-content-end')
+
+        if (this.getAttribute('message') === 'true') {
+            let message;
+            switch(userResult) {
+                case 'unknown': message = "Vous n'aviez jamais entendu cette oeuvre"; break;
+                case 'known': message = "Vous aviez déjà entendu cette oeuvre mais ne la connaissiez pas"; break;
+                case 'bt-false': message = "Vous pensiez connaître cette oeuvre mais vous êtes trompé au blindtest"; break;
+                case 'bt-composer': message = "Vous avez trouvé le compositeur de cette oeuvre"; break;
+                case 'bt-title': message = "Vous avez trouvé le titre de cette oeuvre"; break;
+                case 'bt-both': message = "Vous avez trouvé le compositeur et le titre de cette oeuvre"; break;
+            };
+
+            const total = [stats['unknown'], stats['known'], stats['bt-false'], stats['bt-composer'],stats['bt-title'],stats['bt-both']].reduce(((a, b) => a + b), 0);
+
+            box.innerHTML += `<p class="stat-message">${message}, comme ${Math.round(stats[userResult]*100/total)}% des joueurs.euses.</p>`;
+        }
+
         box.append(waffle);
         if (this.getAttribute('labels') === 'true') {
             box.append(labels);

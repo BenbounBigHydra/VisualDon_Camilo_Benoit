@@ -39,6 +39,10 @@ img#scroll-arrow {
     gap: 2px;
 }
 
+.stat-message {
+    width: 300px;
+}
+
 .cell {
     height: 15px;
     width: 15px;
