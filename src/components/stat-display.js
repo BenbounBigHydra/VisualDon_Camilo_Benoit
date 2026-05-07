@@ -132,7 +132,7 @@ customElements.define("stat-display", class extends HTMLElement {
 
             const total = [stats['unknown'], stats['known'], stats['bt-false'], stats['bt-composer'],stats['bt-title'],stats['bt-both']].reduce(((a, b) => a + b), 0);
 
-            box.innerHTML += `<p class="stat-message">${message}, comme ${Math.round(stats[userResult]*100/total)}% des joueurs.euses.</p>`;
+            box.innerHTML += `<p class="stat-message">${message}, comme ${stats[userResult]-1} autres personnes (${Math.round(stats[userResult]*100/total)}%).</p>`;
         }
 
         box.append(waffle);
