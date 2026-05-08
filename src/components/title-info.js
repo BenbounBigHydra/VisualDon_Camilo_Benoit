@@ -42,10 +42,10 @@ customElements.define("title-info", class extends HTMLElement {
         `
         this.innerHTML += this.getAttribute('labels') === 'true'
         ? `
-            <stat-display filter="title-${this.getAttribute('title-id')}" labels="true"}></stat-display>
+            <stat-display class="mx-5 d-block" filter="title-${this.getAttribute('title-id')}" labels="true"}></stat-display>
         `
         : `
-            <stat-display filter="title-${this.getAttribute('title-id')}" message="true"}></stat-display>
+            <stat-display class="mx-5 d-block" filter="title-${this.getAttribute('title-id')}" labels="true" message="true"}></stat-display>
         `
 
         const button = document.createElement('button');

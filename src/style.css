@@ -4,7 +4,7 @@
 }
 
 body {
-    padding: 10% 5% 5%;
+    padding: 10vh 5vw 5vw;
 }
 
 h1, h2 {
@@ -34,9 +34,9 @@ img#scroll-arrow {
 }
 
 .stat-box {
-    width: calc(8 * 15px + 7 * 2px + 0.5rem);
-    height: calc(15 * 15px + 14 * 2px + 0.5rem);
-    gap: 2px;
+    width: calc(8 * 15px + 7 * 3px + 0.75rem);
+    height: calc(15 * 15px + 14 * 3px + 0.75rem);
+    gap: 3px;
 }
 
 .stat-message {
@@ -47,7 +47,7 @@ img#scroll-arrow {
     height: 15px;
     width: 15px;
     border-radius: 1px;
-    border: 1px solid white;
+    /* border: 1px solid white; */
 }
 
 .ts {
@@ -55,26 +55,32 @@ img#scroll-arrow {
 }
 
 .unknown {
-    background-color: #93989f;
+    background-color: #7A7067;
+    outline: #7A7067;
 }
 .known {
-    background-color: #F28E2B;
+    background-color: #D44127;
+    outline-color: #D44127;
 }
 .bt-false {
-    background-color: #b71f33;
+    background-color: #EAAA5C;
+    outline: #EAAA5C;
 }
 .bt-composer {
-    background-color: #487bb1;
+    background-color: #2D5D8B;
+    outline: #2D5D8B;
 }
 .bt-title {
-    background-color: #ad2b7f;
+    background-color: #A3C3E1;
+    outline: #A3C3E1;
 }
 .bt-both {
-    background-color: #4d1493;
+    background-color: #A1B441;
+    outline: #A1B441;
 }
 
 /* 
-.unknown {
+.unknown { 2D5D8B A3C3E1
     background-color: darkred;
 }
 .known {
@@ -94,10 +100,22 @@ img#scroll-arrow {
 } */
 
 .highlight {
-    border: 2px outset lightgray;
+    /* border-radius: 0; */
+    border: 1px solid white;
+    outline-width: 2px;
+    outline-style: solid;
+}
+
+.highlight::after {
+    content: "●";
+    color: white;
+    font-size: 12px;
+    position: relative;
+    left: 3px;
+    top: -8px;
 }
 .empty {
-    background-color: lightgrey;
+    background-color: #C1B5AA;
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */

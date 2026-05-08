@@ -23,7 +23,7 @@ customElements.define("stat-display", class extends HTMLElement {
         const btBoth = total > max? Math.round(stats['bt-both']*max/total) : stats['bt-both'];
 
         const box = document.createElement('div');
-        box.setAttribute('class', 'd-flex flex-wrap-reverse align-content-start stat-box p-1 border rounded border-2');
+        box.setAttribute('class', 'flex-shrink-0 d-flex flex-wrap-reverse align-content-start stat-box p-1 border rounded border-2');
 
         for (let index = 0; index < unknown; index++) {
             box.innerHTML += '<div class="cell unknown"></div>';
@@ -54,11 +54,13 @@ customElements.define("stat-display", class extends HTMLElement {
     }
 
     createLabels(stats) {
-        const total = [stats['unknown'], stats['known'], stats['bt-false'], stats['bt-composer'],stats['bt-title'],stats['bt-both']].reduce(((a, b) => a + b), 0);
+            if (stats) {
+            const total = [stats['unknown'], stats['known'], stats['bt-false'], stats['bt-composer'],stats['bt-title'],stats['bt-both']].reduce(((a, b) => a + b), 0);
+        }
 
         const labels = document.createElement('div');
         labels.setAttribute('class', 'd-flex flex-column gap-2');
-        labels.innerHTML = `
+        labels.innerHTML = stats ? `
             <div class="d-flex align-items-center gap-2">
                 <div class="cell bt-both"></div>
                 <p class="m-0">Deviné le compositeur et le titre : ${stats['bt-both']} personnes (${Math.round(stats['bt-both']*100/total)}%)</p>
@@ -89,6 +91,37 @@ customElements.define("stat-display", class extends HTMLElement {
                 <p class="m-0">Jamais entendu : ${stats['unknown']} personnes (${Math.round(stats['unknown']*100/total)}%)</p>
             </div>
         `
+        : `
+            <div class="d-flex align-items-center gap-2">
+                <div class="cell bt-both"></div>
+                <p class="m-0">Deviné le compositeur et le titre</p>
+            </div>
+
+            <div class="d-flex align-items-center gap-2">
+                <div class="cell bt-title"></div>
+                <p class="m-0">Deviné le titre</p>
+            </div>
+
+            <div class="d-flex align-items-center gap-2">
+                <div class="cell bt-composer"></div>
+                <p class="m-0">Deviné le compositeur</p>
+            </div>
+
+            <div class="d-flex align-items-center gap-2">
+                <div class="cell bt-false"></div>
+                <p class="m-0">Deviné ni le compositeur ni le titre</p>
+            </div>
+
+            <div class="d-flex align-items-center gap-2">
+                <div class="cell known"></div>
+                <p class="m-0">Déjà entendu</p>
+            </div>
+
+            <div class="d-flex align-items-center gap-2">
+                <div class="cell unknown"></div>
+                <p class="m-0">Jamais entendu</p>
+            </div>
+        `
 
         return labels;
     }
@@ -103,7 +136,7 @@ customElements.define("stat-display", class extends HTMLElement {
         const stats = await getStats('titles', id);
 
         // Pour tester l'affichage
-        // const test = {
+        // const stats = {
         //     'unknown': 13,
         //     'known': 29,
         //     'bt-false': 12,
@@ -111,10 +144,9 @@ customElements.define("stat-display", class extends HTMLElement {
         //     'bt-title': 38,
         //     'bt-both': 23,
         // };
-        // const waffle = this.createWaffle(120, test, 'bt-composer');
 
-        const waffle = this.createWaffle(120, stats);
-        const labels = this.createLabels(stats);
+        const waffle = this.createWaffle(120, stats, userResult);
+        const labels = this.getAttribute('labels') === 'full' ? this.createLabels(stats) : this.createLabels();
 
         const box = document.createElement('div');
         box.setAttribute('class', 'd-flex gap-4 p-1 align-items-center justify-content-end')
@@ -136,7 +168,8 @@ customElements.define("stat-display", class extends HTMLElement {
         }
 
         box.append(waffle);
-        if (this.getAttribute('labels') === 'true') {
+
+        if (this.getAttribute('labels') === 'full' || this.getAttribute('labels') === 'true') {
             box.append(labels);
         }
         this.innerHTML = '';
