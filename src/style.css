@@ -128,3 +128,22 @@ img#scroll-arrow {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
 }
+
+title-info {
+    @media (max-width: 596px) {
+        width: 110%;
+    }
+}
+
+stat-display > div {
+    @media (max-width: 900px) {
+        flex-direction: column;
+    }
+}
+
+title-info > button {
+    @media (max-width: 900px) {
+        margin-top: 15px;
+        margin-left: 35%;
+    }
+}
