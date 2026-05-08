@@ -1,7 +1,7 @@
-import { getTitle } from "../api";
+import { getTitle, getUser } from "../api";
 
 customElements.define("title-info", class extends HTMLElement {
-    static observedAttributes = ['title-id']
+    static observedAttributes = ['title-id', 'labels']
     static infoTitle
 
     async connectedCallback() {
@@ -29,6 +29,7 @@ customElements.define("title-info", class extends HTMLElement {
 
     async render() {
         this.infoTitle = await getTitle(this.getAttribute('title-id'));
+
         this.innerHTML = `
             <div class="d-inline">
                 <h2>${this.infoTitle.name}
@@ -39,6 +40,14 @@ customElements.define("title-info", class extends HTMLElement {
             </div>
             <p>${this.infoTitle.description}</p>
         `
+        this.innerHTML += this.getAttribute('labels') === 'true'
+        ? `
+            <stat-display class="mx-5 d-block" filter="title-${this.getAttribute('title-id')}" labels="true"}></stat-display>
+        `
+        : `
+            <stat-display class="mx-5 d-block" filter="title-${this.getAttribute('title-id')}" labels="true" message="true"}></stat-display>
+        `
+
         const button = document.createElement('button');
         button.setAttribute('class', 'btn btn-custom border-2');
         button.innerText = "suivant";

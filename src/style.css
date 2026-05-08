@@ -4,7 +4,7 @@
 }
 
 body {
-    padding: 10% 5% 5%;
+    padding: 10vh 5vw 5vw;
 }
 
 h1, h2 {
@@ -31,6 +31,91 @@ img#scroll-arrow {
     border-color: rgb(255, 117, 182);
     color: rgb(255, 117, 182);
     font-weight: 600;
+}
+
+.stat-box {
+    width: calc(8 * 15px + 7 * 3px + 0.75rem);
+    height: calc(15 * 15px + 14 * 3px + 0.75rem);
+    gap: 3px;
+}
+
+.stat-message {
+    width: 300px;
+}
+
+.cell {
+    height: 15px;
+    width: 15px;
+    border-radius: 1px;
+    /* border: 1px solid white; */
+}
+
+.ts {
+    font-size: 0.8rem;
+}
+
+.unknown {
+    background-color: #7A7067;
+    outline: #7A7067;
+}
+.known {
+    background-color: #D44127;
+    outline-color: #D44127;
+}
+.bt-false {
+    background-color: #EAAA5C;
+    outline: #EAAA5C;
+}
+.bt-composer {
+    background-color: #2D5D8B;
+    outline: #2D5D8B;
+}
+.bt-title {
+    background-color: #A3C3E1;
+    outline: #A3C3E1;
+}
+.bt-both {
+    background-color: #A1B441;
+    outline: #A1B441;
+}
+
+/* 
+.unknown { 2D5D8B A3C3E1
+    background-color: darkred;
+}
+.known {
+    background-color: blue;
+}
+.bt-false {
+    background-color: skyblue;
+}
+.bt-composer {
+    background-color: yellow;
+}
+.bt-title {
+    background-color: lemonchiffon;
+}
+.bt-both {
+    background-color: pink;
+} */
+
+.highlight {
+    /* border-radius: 0; */
+    border: 1px solid white;
+    outline-width: 2px;
+    outline-style: solid;
+}
+
+.highlight::after {
+    content: "●";
+    color: white;
+    font-size: 12px;
+    position: relative;
+    left: 3px;
+    top: -8px;
+}
+.empty {
+    background-color: #C1B5AA;
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */

@@ -1,12 +1,9 @@
 import Choices from "choices.js";
-import { API_BASE, getComposers, getTitles, getUser, sendForm } from "../api";
+import { API_BASE, getComposers, getTitles, getUser, sendForm, titles, composers } from "../api";
 
 customElements.define("blindtest-question", class extends HTMLElement {
     static observedAttributes = ['title-id']
     static embedController
-    static titles
-    static composers
-    static user
     static currentTitle
 
     async connectedCallback() {
@@ -20,9 +17,6 @@ customElements.define("blindtest-question", class extends HTMLElement {
 
     async firstLoad() {
         this.loadSpotifyEmbed();
-        this.composers = await getComposers();
-        this.titles = await getTitles();
-        this.user = await getUser();
         this.currentTitle = await this.getRandomTitle();
         this.setAttribute('title-id', this.currentTitle.id);
         this.addEventListener('loadnext', async () => {
@@ -66,9 +60,9 @@ customElements.define("blindtest-question", class extends HTMLElement {
     }
     
     async getRandomTitle() {
-        const userTitles = this.user.listened_titles;
+        const user = await getUser();
+        const userTitles = user.listened_titles;
         // console.log(userTitles);
-        const titles = this.titles;
         let title;
         do {
             const id = Math.floor(Math.random() * titles.length);
@@ -79,15 +73,15 @@ customElements.define("blindtest-question", class extends HTMLElement {
     }
 
     async loadTitle() {
-        const res = await fetch(`${API_BASE}/titles/${this.getAttribute('title-id')}`, {
-            headers : {
-                "Accept" : "application/json"
-            }
-        });
-        const title = await res.json();
+        // const res = await fetch(`${API_BASE}/titles/${this.getAttribute('title-id')}`, {
+        //     headers : {
+        //         "Accept" : "application/json"
+        //     }
+        // });
+        // const title = await res.json();
         // this.currentTitle = title;
         // console.log(this.currentTitle)
-        this.embedController.loadUri(`spotify:track:${title.spotify_uri}`);
+        this.embedController.loadUri(`spotify:track:${this.currentTitle.spotify_uri}`);
     }
 
     createForm(value) {
@@ -137,7 +131,7 @@ customElements.define("blindtest-question", class extends HTMLElement {
         const composerSelect = document.createElement('select');
         composerSelect.setAttribute('id', 'composer-select');
         composerSelect.innerHTML = '<option value="0" hidden/>';
-        this.composers.forEach(composer => {
+        composers.forEach(composer => {
             composerSelect.innerHTML += `
                 <option value="${composer.id}">${composer.name}</option>
             `
@@ -146,7 +140,7 @@ customElements.define("blindtest-question", class extends HTMLElement {
         const titleSelect = document.createElement('select');
         titleSelect.setAttribute('id', 'title-select');
         titleSelect.innerHTML = '<option value="0" hidden/>';
-        this.titles.forEach(title => {
+        titles.forEach(title => {
             titleSelect.innerHTML += `
                 <option value="${title.id}">${title.name}</option>
             `
@@ -183,7 +177,6 @@ customElements.define("blindtest-question", class extends HTMLElement {
             const form = this.createForm(this.checkAnswer(composerSelect, titleSelect));
             // console.log(form);
             const data = await sendForm(form, 'blindtest-results');
-            this.titles = await getTitles();
             await this.displayInfo();
         });
 
@@ -210,13 +203,11 @@ customElements.define("blindtest-question", class extends HTMLElement {
         document.querySelector('#unknown').addEventListener('click', async (e) => {
             const form = this.createForm(e.currentTarget.id);
             const data = await sendForm(form, 'blindtest-results');
-            this.titles = await getTitles();
             await this.displayInfo();
         })
         document.querySelector('#known').addEventListener('click', async (e) => {
             const form = this.createForm(e.currentTarget.id);
             const data = await sendForm(form, 'blindtest-results');
-            this.titles = await getTitles();
             await this.displayInfo();
         })
         document.querySelector('.blindtest').addEventListener('click', () => {this.displayBT()})
