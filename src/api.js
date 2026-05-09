@@ -15,6 +15,22 @@ const addAnswered = (category) => {
     localStorage.setItem('answered', JSON.stringify(answered));
 }
 
+const checkResultAccess = async () => {
+    const canAccessResults = JSON.parse(localStorage.getItem('can_access_results')) === 'true';
+
+    if (canAccessResults) {
+        return true;
+    } else {
+        const user = await getUser();
+        if (user['listened_titles'].length >= 10) {
+            localStorage.setItem('can_access_results', 'true');
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+
 const getUser = async () => {
     const userUuid = getUserUuid();
     const res = await fetch(`${API_BASE}/users/self`, {
@@ -89,4 +105,4 @@ const getStats = async (endpoint, id) => {
 const composers = await getComposers();
 const titles = await getTitles();
 
-export { API_BASE, getUserUuid, getUser, getAnswered, addAnswered, sendForm, getComposers, getTitles, getTitle, composers, titles, getStats };
+export { API_BASE, getUserUuid, getUser, getAnswered, addAnswered, sendForm, getComposers, getTitles, getTitle, composers, titles, getStats, checkResultAccess };

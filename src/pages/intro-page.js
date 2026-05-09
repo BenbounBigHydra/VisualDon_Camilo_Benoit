@@ -1,4 +1,4 @@
-import { API_BASE, getUserUuid } from "../api.js";
+import { API_BASE, checkResultAccess, getUserUuid } from "../api.js";
 
 customElements.define('intro-page', class extends HTMLElement {
     async connectedCallback() {
@@ -13,7 +13,7 @@ customElements.define('intro-page', class extends HTMLElement {
     }
 
     loadBlindTestPage() {
-        document.querySelector('body').innerHTML = '<blindtest-page />'
+        document.querySelector('body').innerHTML = '<blindtest-page />';
     }
 
     async render() {
@@ -30,7 +30,7 @@ customElements.define('intro-page', class extends HTMLElement {
         if (! userUuid) {
             this.setUserUuid();
         }
-        const canAccessResults = JSON.parse(localStorage.getItem('can_access_results')) === 'true';
+        const canAccessResults = await checkResultAccess();
         this.innerHTML += `
             <div class="d-flex justify-content-center gap-5">
                 <button id="bt-button" class="btn border-2 btn-custom">Blind Test</button>
