@@ -54,8 +54,9 @@ customElements.define("stat-display", class extends HTMLElement {
     }
 
     createLabels(stats) {
-            if (stats) {
-            const total = [stats['unknown'], stats['known'], stats['bt-false'], stats['bt-composer'],stats['bt-title'],stats['bt-both']].reduce(((a, b) => a + b), 0);
+        let total;
+        if (stats) {
+            total = [stats['unknown'], stats['known'], stats['bt-false'], stats['bt-composer'],stats['bt-title'],stats['bt-both']].reduce(((a, b) => a + b), 0);
         }
 
         const labels = document.createElement('div');
@@ -133,7 +134,7 @@ customElements.define("stat-display", class extends HTMLElement {
         
         const user = await getUser();
         const userResult = user['listened_titles'].find((el) => checkId(el))['pivot']['result'];
-        const stats = await getStats('titles', id);
+        const stats = await getStats(`titles/${id}`);
 
         // Pour tester l'affichage
         // const stats = {

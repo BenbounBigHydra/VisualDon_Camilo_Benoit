@@ -53,6 +53,7 @@ img#scroll-arrow {
     height: 15px;
     width: 15px;
     border-radius: 1px;
+    flex-shrink: 0;
     /* border: 1px solid white; */
 }
 

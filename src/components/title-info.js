@@ -1,7 +1,7 @@
 import { getTitle, getUser } from "../api";
 
 customElements.define("title-info", class extends HTMLElement {
-    static observedAttributes = ['title-id', 'labels']
+    static observedAttributes = ['title-id', 'labels', 'button']
     static infoTitle
 
     async connectedCallback() {
@@ -47,22 +47,24 @@ customElements.define("title-info", class extends HTMLElement {
             </div>
             <p>${this.infoTitle.description}</p>
         `
-        this.innerHTML += this.getAttribute('labels') === 'true'
+        this.innerHTML += this.getAttribute('labels') === 'full'
         ? `
-            <stat-display class="mx-5 d-block" filter="title-${this.getAttribute('title-id')}" labels="true"}></stat-display>
+            <stat-display class="mx-5 d-block" filter="title-${this.getAttribute('title-id')}" labels="full" message="true"></stat-display>
         `
         : `
-            <stat-display class="mx-5 d-block" filter="title-${this.getAttribute('title-id')}" labels="true" message="true"}></stat-display>
+            <stat-display class="mx-5 d-block" filter="title-${this.getAttribute('title-id')}" labels="true" message="true"></stat-display>
         `
 
-        const button = document.createElement('button');
-        button.setAttribute('class', 'btn btn-custom border-2');
-        button.innerText = "suivant";
-        button.addEventListener('click', () => {
-            this.parentElement.removeChild(this);
-            document.querySelector('blindtest-question').dispatchEvent(new CustomEvent('loadnext'));
-        })
-        this.append(button);
+        if (this.getAttribute('button') !== 'false') {
+            const button = document.createElement('button');
+            button.setAttribute('class', 'btn btn-custom border-2');
+            button.innerText = "suivant";
+            button.addEventListener('click', () => {
+                this.parentElement.removeChild(this);
+                document.querySelector('blindtest-question').dispatchEvent(new CustomEvent('loadnext'));
+            })
+            this.append(button);
+        }
     }
 
 })

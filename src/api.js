@@ -89,11 +89,7 @@ const sendForm = async (form, endpoint) => {
 }
 
 const getStats = async (endpoint, id) => {
-    let url = `${API_BASE}/${endpoint}`;
-    url += endpoint === 'blindtest'? '' : `/${id}`;
-    url += '/stats';
-    
-    const res = await fetch(url, {
+    const res = await fetch(`${API_BASE}/${endpoint}/stats`, {
         headers: {
             "Accept" : "application/json"
         }
