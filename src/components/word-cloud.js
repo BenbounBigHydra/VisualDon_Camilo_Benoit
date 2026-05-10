@@ -1,5 +1,5 @@
 // import { forceSimulation, select } from "d3";
-import { addAnswered, API_BASE, getUser, getUserUuid, sendForm } from "../api.js";
+import { addAnswered, API_BASE, getData, getUser, getUserUuid, sendForm } from "../api.js";
 
 customElements.define("word-cloud", class extends HTMLElement {
     static observedAttributes = ['get-endpoint', 'post-endpoint'] 
@@ -11,13 +11,6 @@ customElements.define("word-cloud", class extends HTMLElement {
 
     attributeChangedCallback() {
         this.render();
-    }
-
-    async getData() {
-        const res = await fetch(`${API_BASE}/${this.getAttribute('get-endpoint')}`);
-        let data = await res.json();
-        
-        return data;
     }
 
     async sendForm() {
@@ -65,7 +58,7 @@ customElements.define("word-cloud", class extends HTMLElement {
 
     async render() {
         const user = await getUser();
-        const data = this.getAttribute('post-endpoint') === 'known-composer-titles' ? user.known_composers : await this.getData();
+        const data = this.getAttribute('post-endpoint') === 'known-composer-titles' ? user.known_composers : await getData(this.getAttribute('get-endpoint'));
 
         // console.log(data);
         // console.log(data.map(el => this.getWord(el)));

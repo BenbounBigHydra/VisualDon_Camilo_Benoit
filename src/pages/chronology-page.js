@@ -18,7 +18,8 @@ customElements.define("chronology-page", class extends HTMLElement {
         this.setAttribute('class', 'rounded-3 p-5 bg-light border border-primary-subtle border-2 d-flex justify-content-center flex-column align-items-center');
         const user = await getUser();
         this.userTitles = user['listened_titles'].sort((a, b) => a['release_year'] - b['release_year']);
-        this.setAttribute('title-id', this.currentTitleId ?? this.userTitles[0].id);
+
+        this.setAttribute('title-id', sessionStorage.getItem('chronologyTitleId') ?? this.userTitles[0].id);
     }
 
     async render() {
@@ -29,6 +30,7 @@ customElements.define("chronology-page", class extends HTMLElement {
             <!-- <timeline-display title-id="${this.getAttribute('title-id')}"></timeline-display> -->
         `
         this.currentTitleId = this.getAttribute('title-id');
+        sessionStorage.setItem('chronologyTitleId', this.currentTitleId);
 
         const pos = this.userTitles.findIndex(e => e.id == this.currentTitleId);
 

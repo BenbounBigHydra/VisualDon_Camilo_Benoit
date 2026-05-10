@@ -31,6 +31,13 @@ const checkResultAccess = async () => {
     }
 }
 
+const getData = async (endpoint) => {
+    const res = await fetch(`${API_BASE}/${endpoint}`);
+    let data = await res.json();
+    
+    return data;
+}
+
 const getUser = async () => {
     const userUuid = getUserUuid();
     const res = await fetch(`${API_BASE}/users/self`, {
@@ -101,4 +108,4 @@ const getStats = async (endpoint, id) => {
 const composers = await getComposers();
 const titles = await getTitles();
 
-export { API_BASE, getUserUuid, getUser, getAnswered, addAnswered, sendForm, getComposers, getTitles, getTitle, composers, titles, getStats, checkResultAccess };
+export { API_BASE, getUserUuid, getUser, getAnswered, addAnswered, sendForm, getComposers, getTitles, getTitle, composers, titles, getStats, checkResultAccess, getData };
