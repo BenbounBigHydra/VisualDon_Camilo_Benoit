@@ -11,6 +11,7 @@ customElements.define("chronology-page", class extends HTMLElement {
 
     render() {
         // utiliser title-info et timeline-display
+        this.setAttribute('class', 'rounded-3 p-5 bg-light border border-primary-subtle border-2 d-flex justify-content-center flex-column align-items-center');
     }
 
 })

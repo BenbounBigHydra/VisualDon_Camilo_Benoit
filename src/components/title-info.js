@@ -30,13 +30,20 @@ customElements.define("title-info", class extends HTMLElement {
     async render() {
         this.infoTitle = await getTitle(this.getAttribute('title-id'));
 
+        this.setAttribute('class', 'w-100')
         this.innerHTML = `
-            <div class="d-inline">
-                <h2>${this.infoTitle.name}
-                    <a class="ms-2" href="https://open.spotify.com/track/${this.infoTitle.spotify_uri}">
-                    <i class="bi bi-spotify fs-2"></i></a></h2>
-                <p class="mt-2 fs-5">composée par <span class="fw-semibold">${this.infoTitle.composer.name}</span><br/>composée en ${this.infoTitle.release_year} (${this.getName(this.infoTitle.composer.period)})</p>
-                <img class="portrait" src="${this.infoTitle.composer.portrait_url}">
+            <div class="d-flex gap-5">
+                <div>
+                    <h2>${this.infoTitle.name}
+                        <a class="ms-2" href="https://open.spotify.com/track/${this.infoTitle.spotify_uri}">
+                            <i class="bi bi-spotify fs-2"></i>
+                        </a>
+                    </h2>
+                    <p class="mt-2 fs-5">
+                        composée par <span class="fw-semibold">${this.infoTitle.composer.name}</span><br/>composée en ${this.infoTitle.release_year} (${this.getName(this.infoTitle.composer.period)})
+                    </p>
+                </div>
+                <img class="portrait d-inline rounded" src="${this.infoTitle.composer.portrait_url}">
             </div>
             <p>${this.infoTitle.description}</p>
         `

@@ -16,10 +16,7 @@ customElements.define('blindtest-page', class extends HTMLElement {
             <blindtest-question title-id=""></blindtest-question>
         `
         if (loadNavBar) {
-            const navBar = document.createElement('nav-bar');
-            navBar.setAttribute('selected', 'blindtest');
-            console.log(navBar);
-            this.insertAdjacentElement('beforebegin', navBar);
+            this.insertAdjacentHTML('beforebegin', '<nav-bar selected="blindtest"></nav>');
         }
     }
 
@@ -67,10 +64,10 @@ customElements.define('blindtest-page', class extends HTMLElement {
     }
 
     async render() {
+        this.setAttribute('class', 'rounded-3 p-5 bg-light border border-primary-subtle border-2 d-flex justify-content-center flex-column align-items-center');
+        
         const answered = getAnswered();
         const canAccessResults = await checkResultAccess();
-
-        this.setAttribute('class', 'rounded-3 p-5 bg-light border border-primary-subtle border-2 d-flex justify-content-center flex-column align-items-center');
 
         if (answered.includes('known-composer-titles')) {
             this.loadBlindTest(canAccessResults);

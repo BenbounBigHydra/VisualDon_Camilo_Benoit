@@ -9,6 +9,13 @@ customElements.define("nav-bar", class extends HTMLElement {
         await this.render();
     }
 
+    loadPage(page) {
+        document.querySelector('body').innerHTML = `
+            <nav-bar selected="${page}"></nav-bar>
+            <${page}-page />
+        `;
+    }
+
     render() {
         this.setAttribute('class', 'd-flex position-absolute ms-3 gap-3 align-items-start');
         this.innerHTML = `
@@ -19,6 +26,10 @@ customElements.define("nav-bar", class extends HTMLElement {
             <div id="nav-chronology" class="btn btn-nav bg-light border px-4 border-primary-subtle border-2 border-bottom-0 rounded-bottom-0">Chronologie</div>
         `
         this.querySelector(`#nav-${this.getAttribute('selected')}`).classList.add('selected');
+
+        this.querySelector('#nav-blindtest').addEventListener('click', () => this.loadPage('blindtest'));
+        this.querySelector('#nav-results').addEventListener('click', () => this.loadPage('results'));
+        this.querySelector('#nav-chronology').addEventListener('click', () => this.loadPage('chronology'));
     }
 
 })

@@ -169,7 +169,7 @@ intro-page, blindtest-page, results-page, chronology-page {
 }
 
 .btn.btn-nav:hover {
-    bottom: calc(38px);
+    bottom: 38px;
     padding-bottom: 8px;
 }
 
@@ -181,8 +181,8 @@ intro-page, blindtest-page, results-page, chronology-page {
     filter: none;
     box-shadow: none;
     z-index: 2;
-    bottom: 32px;
-    padding-bottom: 2px;
+    bottom: 38px;
+    padding-bottom: 8px;
     cursor: default;
 }
 
