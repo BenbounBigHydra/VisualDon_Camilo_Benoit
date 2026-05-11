@@ -236,7 +236,6 @@ customElements.define("stat-display", class extends HTMLElement {
             stats[title['pivot']['result']] ++;
         });
 
-        console.log(userTitles, stats);
         const waffle = this.createWaffle(120, stats, 'self');
         
         const total = [stats['unknown'], stats['known'], stats['bt-false'], stats['bt-composer'],stats['bt-title'],stats['bt-both']].reduce(((a, b) => a + b), 0);
@@ -270,8 +269,6 @@ customElements.define("stat-display", class extends HTMLElement {
 
         const total = [statsArray['total']['unknown'], statsArray['total']['known'], statsArray['total']['bt-false'], statsArray['total']['bt-composer'],statsArray['total']['bt-title'],statsArray['total']['bt-both']].reduce(((a, b) => a + b), 0);
 
-        console.log(total);
-
         const waffle = this.createWaffleAlt(120, stats, total);
         const labels = this.createLabels(stats);
 
@@ -287,12 +284,38 @@ customElements.define("stat-display", class extends HTMLElement {
 
         if (this.getAttribute('filter').startsWith('title-')) {
             const id = this.getAttribute('filter').slice(6);
-            this.loadTitleStats(id);
+            await this.loadTitleStats(id);
         } else if (this.getAttribute('filter') === 'self') {
-            this.loadUserStats();
+            await this.loadUserStats();
         } else {
-            this.loadGlobalStats(this.getAttribute('filter'));
+            await this.loadGlobalStats(this.getAttribute('filter'));
         }
+
+        document.querySelectorAll('.stat-box').forEach((box) => {
+            console.log(box);
+            box.addEventListener('mouseover', (e) => {
+                if (e.target.closest('.cell')) {
+                    const hovered = e.target.closest('.cell').classList[1];
+                    document.querySelectorAll('.cell').forEach((square) => {
+                        if(hovered !== 'empty') {
+                            if(square.classList.contains(hovered)) {
+                                square.classList.remove('empty');
+                            } else {
+                                square.classList.add('empty');
+                            }
+                        }
+                    })
+                    console.log(hovered);
+                }
+            });
+            box.addEventListener('mouseleave', () => {
+                document.querySelectorAll('.cell').forEach((square) => {
+                    if(square.classList[1] !== 'empty') {
+                        square.classList.remove('empty');
+                    }
+                })
+            })
+        })
     }
 
 })
