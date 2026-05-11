@@ -68,32 +68,32 @@ customElements.define("stat-display", class extends HTMLElement {
         labels.innerHTML = stats ? `
             <div class="d-flex align-items-center gap-2">
                 <div class="cell bt-both"></div>
-                <p class="m-0">Deviné le compositeur et le titre : ${stats['bt-both']} personnes (${Math.round(stats['bt-both']*100/total)}%)</p>
+                <p class="m-0">Deviné le compositeur et le titre : ${stats['bt-both']} réponses (${Math.round(stats['bt-both']*100/total)}%)</p>
             </div>
 
             <div class="d-flex align-items-center gap-2">
                 <div class="cell bt-title"></div>
-                <p class="m-0">Deviné le titre : ${stats['bt-title']} personnes (${Math.round(stats['bt-title']*100/total)}%)</p>
+                <p class="m-0">Deviné le titre : ${stats['bt-title']} réponses (${Math.round(stats['bt-title']*100/total)}%)</p>
             </div>
 
             <div class="d-flex align-items-center gap-2">
                 <div class="cell bt-composer"></div>
-                <p class="m-0">Deviné le compositeur : ${stats['bt-composer']} personnes (${Math.round(stats['bt-composer']*100/total)}%)</p>
+                <p class="m-0">Deviné le compositeur : ${stats['bt-composer']} réponses (${Math.round(stats['bt-composer']*100/total)}%)</p>
             </div>
 
             <div class="d-flex align-items-center gap-2">
                 <div class="cell bt-false"></div>
-                <p class="m-0">Deviné ni le compositeur ni le titre : ${stats['bt-false']} personnes (${Math.round(stats['bt-false']*100/total)}%)</p>
+                <p class="m-0">Deviné ni le compositeur ni le titre : ${stats['bt-false']} réponses (${Math.round(stats['bt-false']*100/total)}%)</p>
             </div>
 
             <div class="d-flex align-items-center gap-2">
                 <div class="cell known"></div>
-                <p class="m-0">Déjà entendu : ${stats['known']} personnes (${Math.round(stats['known']*100/total)}%)</p>
+                <p class="m-0">Déjà entendu : ${stats['known']} réponses (${Math.round(stats['known']*100/total)}%)</p>
             </div>
 
             <div class="d-flex align-items-center gap-2">
                 <div class="cell unknown"></div>
-                <p class="m-0">Jamais entendu : ${stats['unknown']} personnes (${Math.round(stats['unknown']*100/total)}%)</p>
+                <p class="m-0">Jamais entendu : ${stats['unknown']} réponses (${Math.round(stats['unknown']*100/total)}%)</p>
             </div>
         `
         : `
