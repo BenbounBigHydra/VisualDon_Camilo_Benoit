@@ -15,6 +15,13 @@ customElements.define('intro-page', class extends HTMLElement {
     loadBlindTestPage() {
         document.querySelector('body').innerHTML = '<blindtest-page />';
     }
+    
+    loadResultsPage() {
+        document.querySelector('body').innerHTML = `
+            <nav-bar selected="results"></nav-bar>
+            <results-page />
+        `;
+    }
 
     async render() {
         
@@ -36,7 +43,8 @@ customElements.define('intro-page', class extends HTMLElement {
                 <button id="bt-button" class="btn border-2 btn-custom">Blind Test</button>
                 <button id="results-button" class="btn border-2 btn-custom ${canAccessResults ? '' : 'disabled'}">Résultats</button>
         `
-        document.querySelector('#bt-button').addEventListener('click', () => {this.loadBlindTestPage()})
+        document.querySelector('#bt-button').addEventListener('click', () => {this.loadBlindTestPage()});
+        document.querySelector('#results-button').addEventListener('click', () => {this.loadResultsPage()});
         
         console.log(`uuid : ${userUuid}`);
     }

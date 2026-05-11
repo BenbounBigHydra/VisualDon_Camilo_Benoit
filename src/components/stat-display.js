@@ -44,10 +44,14 @@ customElements.define("stat-display", class extends HTMLElement {
             box.innerHTML += '<div class="cell bt-both"></div>';
         }
 
-        if (highlight) {
+        if (highlight && highlight !== 'self') {
             box.querySelectorAll(`.${highlight}`).forEach(el => {
                 el.classList.add('highlight');
             });
+        } else if (highlight === 'self') {
+            for (let i = 0; i < 114 - total; i++) {
+                box.innerHTML += '<div class="cell empty"></div>';
+            }
         }
 
         return box;
@@ -128,8 +132,8 @@ customElements.define("stat-display", class extends HTMLElement {
     }
 
     async loadTitleStats(id) {    
-        let checkId = (el) => {
-            return el['id'] == this.getAttribute('filter').slice(6);;
+        const checkId = (el) => {
+            return el['id'] == this.getAttribute('filter').slice(6);
         }
         
         const user = await getUser();
@@ -150,7 +154,7 @@ customElements.define("stat-display", class extends HTMLElement {
         const labels = this.getAttribute('labels') === 'full' ? this.createLabels(stats) : this.createLabels();
 
         const box = document.createElement('div');
-        box.setAttribute('class', 'd-flex gap-4 p-1 align-items-center justify-content-end')
+        box.setAttribute('class', 'd-flex gap-4 p-1 align-items-center justify-content-end');
 
         if (this.getAttribute('message') === 'true') {
             let message;
@@ -177,11 +181,75 @@ customElements.define("stat-display", class extends HTMLElement {
         this.append(box);
     }
 
+    async loadUserStats() {
+        const user = await getUser();
+        const userTitles = user['listened_titles'];
+
+        const stats = {
+            'unknown': 0,
+            'known': 0,
+            'bt-false': 0,
+            'bt-composer': 0,
+            'bt-title': 0,
+            'bt-both': 0
+        }
+
+        userTitles.forEach((title) => {
+            stats[title['pivot']['result']] ++;
+        });
+
+        console.log(userTitles, stats);
+        const waffle = this.createWaffle(120, stats, 'self');
+        
+        const box = document.createElement('div');
+        box.setAttribute('class', 'd-flex flex-column gap-4 p-1');
+        box.append(waffle);
+        
+        const total = [stats['unknown'], stats['known'], stats['bt-false'], stats['bt-composer'],stats['bt-title'],stats['bt-both']].reduce(((a, b) => a + b), 0);
+        const message = document.createElement('p');
+        message.innerText = `Vous avez déjà découvert ${total} pièces.
+        Votre score est de ${stats['bt-composer'] + stats['bt-title'] + 2*stats['bt-both']}/${total*2} (Max. 228).
+        `
+
+        this.innerHTML = '';
+        this.append(box, message);
+    }
+
+    async loadGlobalStats(filter) {
+        const statsArray = await getStats(`blindtest`);
+        let stats;
+
+        if (filter === 'all') {
+            stats = statsArray['total'];
+        } else if (filter === 'self-taught' || filter === 'conservatory' || filter === 'hem') {
+            stats = statsArray['by_education_level'][filter];
+        } else if (filter.startsWith('childhood-')) {
+            stats = statsArray['by_childhood_genre'][filter.slice(10)];
+        } else if (filter.startsWith('current-')) {
+            stats = statsArray['by_current_genre'][filter.slice(8)];            
+        }
+        console.log(stats);
+
+        const waffle = this.createWaffle(120, stats);
+        const labels = this.createLabels(stats);
+
+        const box = document.createElement('div');
+        box.setAttribute('class', 'd-flex gap-4 p-1 align-items-center justify-content-end');
+        box.append(waffle,labels);
+
+        this.innerHTML = '';
+        this.append(box);
+    }
+
     async render() {
 
         if (this.getAttribute('filter').startsWith('title-')) {
             const id = this.getAttribute('filter').slice(6);
             this.loadTitleStats(id);
+        } else if (this.getAttribute('filter') === 'self') {
+            this.loadUserStats();
+        } else {
+            this.loadGlobalStats(this.getAttribute('filter'));
         }
     }
 

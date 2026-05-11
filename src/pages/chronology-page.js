@@ -53,7 +53,7 @@ customElements.define("chronology-page", class extends HTMLElement {
         next.setAttribute('class', 'btn btn-custom border-2');
         next.innerText = "Suivant";
 
-        if (pos === this.userTitles.length) {
+        if (pos === this.userTitles.length-1) {
             next.classList.add('disabled');
         } else {
             next.addEventListener('click', () => {
