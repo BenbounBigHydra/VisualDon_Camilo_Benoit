@@ -1,4 +1,4 @@
-import { API_BASE, getUserUuid } from "../api.js";
+import { API_BASE, checkResultAccess, getUserUuid } from "../api.js";
 
 customElements.define('intro-page', class extends HTMLElement {
     async connectedCallback() {
@@ -13,14 +13,21 @@ customElements.define('intro-page', class extends HTMLElement {
     }
 
     loadBlindTestPage() {
-        document.querySelector('body').innerHTML = '<blindtest-page />'
+        document.querySelector('body').innerHTML = '<blindtest-page />';
+    }
+    
+    loadResultsPage() {
+        document.querySelector('body').innerHTML = `
+            <nav-bar selected="results"></nav-bar>
+            <results-page />
+        `;
     }
 
     async render() {
         
         this.setAttribute('class', 'rounded-3 p-4 bg-light border border-primary-subtle border-2');
         this.innerHTML = `
-            <h1>Classical Education</h1>
+            <h1>CLASSIK</h1>
             <p>Le but de cette représentation est d'explorer l'impact de la musique savante, communément appelée musique classique, sur la société actuelle à travers le degré de connaissance de différentes oeuvres et compositeurs.trices classiques. Nous voulons comprendre la corrélation possible entre l'éducation musicale d'une personne ainsi que ses préférences musicales et le degré de connaissance de cette personne vis-à-vis de la musique savante.</p>
             <p style="font-style: italic;">Le terme "musique classique" sera régulièrement utilisé dans ce projet pour désigner la "musique savante".</p>
         `
@@ -30,13 +37,14 @@ customElements.define('intro-page', class extends HTMLElement {
         if (! userUuid) {
             this.setUserUuid();
         }
-        const canAccessResults = JSON.parse(localStorage.getItem('can_access_results')) === 'true';
+        const canAccessResults = await checkResultAccess();
         this.innerHTML += `
             <div class="d-flex justify-content-center gap-5">
                 <button id="bt-button" class="btn border-2 btn-custom">Blind Test</button>
                 <button id="results-button" class="btn border-2 btn-custom ${canAccessResults ? '' : 'disabled'}">Résultats</button>
         `
-        document.querySelector('#bt-button').addEventListener('click', () => {this.loadBlindTestPage()})
+        document.querySelector('#bt-button').addEventListener('click', () => {this.loadBlindTestPage()});
+        document.querySelector('#results-button').addEventListener('click', () => {this.loadResultsPage()});
         
         console.log(`uuid : ${userUuid}`);
     }

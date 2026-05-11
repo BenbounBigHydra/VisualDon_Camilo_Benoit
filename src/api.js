@@ -15,6 +15,29 @@ const addAnswered = (category) => {
     localStorage.setItem('answered', JSON.stringify(answered));
 }
 
+const checkResultAccess = async () => {
+    const canAccessResults = JSON.parse(localStorage.getItem('can_access_results')) === 'true';
+
+    if (canAccessResults) {
+        return true;
+    } else {
+        const user = await getUser();
+        if (user['listened_titles'].length >= 10) {
+            localStorage.setItem('can_access_results', 'true');
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+
+const getData = async (endpoint) => {
+    const res = await fetch(`${API_BASE}/${endpoint}`);
+    let data = await res.json();
+    
+    return data;
+}
+
 const getUser = async () => {
     const userUuid = getUserUuid();
     const res = await fetch(`${API_BASE}/users/self`, {
@@ -73,11 +96,7 @@ const sendForm = async (form, endpoint) => {
 }
 
 const getStats = async (endpoint, id) => {
-    let url = `${API_BASE}/${endpoint}`;
-    url += endpoint === 'blindtest'? '' : `/${id}`;
-    url += '/stats';
-    
-    const res = await fetch(url, {
+    const res = await fetch(`${API_BASE}/${endpoint}/stats`, {
         headers: {
             "Accept" : "application/json"
         }
@@ -89,4 +108,4 @@ const getStats = async (endpoint, id) => {
 const composers = await getComposers();
 const titles = await getTitles();
 
-export { API_BASE, getUserUuid, getUser, getAnswered, addAnswered, sendForm, getComposers, getTitles, getTitle, composers, titles, getStats };
+export { API_BASE, getUserUuid, getUser, getAnswered, addAnswered, sendForm, getComposers, getTitles, getTitle, composers, titles, getStats, checkResultAccess, getData };

@@ -12,6 +12,8 @@
     "vite": "^8.0.1"
   },
   "dependencies": {
-    "choices.js": "^11.2.3"
+    "choices.js": "^11.2.3",
+    "d3": "^7.9.0",
+    "d3-cloud": "^1.2.9"
   }
 }

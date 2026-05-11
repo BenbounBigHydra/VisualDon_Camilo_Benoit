@@ -1,5 +1,5 @@
 import Choices from "choices.js";
-import { API_BASE, getComposers, getTitles, getUser, sendForm, titles, composers } from "../api";
+import { API_BASE, getComposers, getTitles, getUser, sendForm, titles, composers, checkResultAccess } from "../api";
 
 customElements.define("blindtest-question", class extends HTMLElement {
     static observedAttributes = ['title-id']
@@ -22,7 +22,13 @@ customElements.define("blindtest-question", class extends HTMLElement {
         this.addEventListener('loadnext', async () => {
             this.currentTitle = await this.getRandomTitle();
             this.setAttribute('title-id', this.currentTitle.id);
-        })
+        });
+
+        const loadNavBar = await checkResultAccess();
+        if (loadNavBar) {
+            this.parentElement.insertAdjacentHTML('beforebegin', '<nav-bar selected="blindtest"></nav>');
+        }
+
     }
 
     async displayInfo() {

@@ -33,6 +33,12 @@ img#scroll-arrow {
     font-weight: 600;
 }
 
+.btn.btn-custom.disabled {
+    background-color: #C1B5AA;
+    border-color: #7A7067;
+    color: #7A7067;
+}
+
 .stat-box {
     width: calc(8 * 15px + 7 * 3px + 0.75rem);
     height: calc(15 * 15px + 14 * 3px + 0.75rem);
@@ -47,6 +53,7 @@ img#scroll-arrow {
     height: 15px;
     width: 15px;
     border-radius: 1px;
+    flex-shrink: 0;
     /* border: 1px solid white; */
 }
 
@@ -115,7 +122,7 @@ img#scroll-arrow {
     top: -8px;
 }
 .empty {
-    background-color: #C1B5AA;
+    background-color: #e8e1db;
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
@@ -146,4 +153,47 @@ title-info > button {
         margin-top: 15px;
         margin-left: 35%;
     }
+}
+
+intro-page, blindtest-page, results-page, chronology-page {
+    z-index: 1;
+}
+
+.btn.btn-nav {
+    position: relative;
+    bottom: 32px;
+    font-weight: 600;
+    color: #9EC5FE;
+    padding-bottom: 2px;
+    box-shadow: 0 -5px 10px -10px rgba(0, 0, 0, 0.345) inset;
+    /* filter: brightness(90%); */
+}
+
+.btn.btn-nav:hover {
+    bottom: 38px;
+    padding-bottom: 8px;
+}
+
+.btn.btn-nav:active {
+    color: #9EC5FE;
+}
+
+.btn.btn-nav.selected {
+    filter: none;
+    box-shadow: none;
+    z-index: 2;
+    bottom: 38px;
+    padding-bottom: 8px;
+    cursor: default;
+}
+
+.popup {
+    z-index: 9999;
+}
+
+#popup-marker {
+    width: 15px;
+    height: 15px;
+    rotate: 45deg;
+    top: -0.2rem;
 }

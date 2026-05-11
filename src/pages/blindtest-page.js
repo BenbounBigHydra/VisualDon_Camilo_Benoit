@@ -1,4 +1,4 @@
-import { API_BASE, getAnswered, getUser, getUserUuid } from "../api.js";
+import { API_BASE, checkResultAccess, getAnswered, getUser, getUserUuid } from "../api.js";
 
 customElements.define('blindtest-page', class extends HTMLElement {
     titles;
@@ -7,7 +7,7 @@ customElements.define('blindtest-page', class extends HTMLElement {
         await this.render();
     }
 
-    async loadBlindTest() {
+    async loadBlindTest(loadNavBar) {
         // this.loadTitles();
         // const title = await this.getRandomTitle();
         this.innerHTML = `
@@ -15,6 +15,9 @@ customElements.define('blindtest-page', class extends HTMLElement {
             <div id="listener"></div>
             <blindtest-question title-id=""></blindtest-question>
         `
+        if (loadNavBar) {
+            this.insertAdjacentHTML('beforebegin', '<nav-bar selected="blindtest"></nav>');
+        }
     }
 
     loadClouds() {
@@ -61,12 +64,13 @@ customElements.define('blindtest-page', class extends HTMLElement {
     }
 
     async render() {
-        const answered = getAnswered();
-
         this.setAttribute('class', 'rounded-3 p-5 bg-light border border-primary-subtle border-2 d-flex justify-content-center flex-column align-items-center');
+        
+        const answered = getAnswered();
+        const canAccessResults = await checkResultAccess();
 
         if (answered.includes('known-composer-titles')) {
-            this.loadBlindTest();
+            this.loadBlindTest(canAccessResults);
         } else {
             this.loadClouds();
         }
