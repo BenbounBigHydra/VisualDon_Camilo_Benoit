@@ -63,6 +63,10 @@ customElements.define("stat-display", class extends HTMLElement {
             total = [stats['unknown'], stats['known'], stats['bt-false'], stats['bt-composer'],stats['bt-title'],stats['bt-both']].reduce(((a, b) => a + b), 0);
         }
 
+        if (total === 0) {
+            total = 1;
+        }
+
         const labels = document.createElement('div');
         labels.setAttribute('class', 'd-flex flex-column gap-2');
         labels.innerHTML = stats ? `
