@@ -57,6 +57,40 @@ customElements.define("stat-display", class extends HTMLElement {
         return box;
     }
 
+    createWaffleAlt(max, stats, total) {
+        
+        const unknown = Math.round(stats['unknown']*max/total);
+        const known = Math.round(stats['known']*max/total);
+        const btFalse = Math.round(stats['bt-false']*max/total);
+        const btComposer = Math.round(stats['bt-composer']*max/total);
+        const btTitle = Math.round(stats['bt-title']*max/total);
+        const btBoth = Math.round(stats['bt-both']*max/total);
+
+        const box = document.createElement('div');
+        box.setAttribute('class', 'flex-shrink-0 d-flex flex-wrap-reverse align-content-start stat-box p-1 border rounded border-2');
+
+        for (let index = 0; index < unknown; index++) {
+            box.innerHTML += '<div class="cell unknown"></div>';
+        }
+        for (let index = 0; index < known; index++) {
+            box.innerHTML += '<div class="cell known"></div>';
+        }
+        for (let index = 0; index < btFalse; index++) {
+            box.innerHTML += '<div class="cell bt-false"></div>';
+        }
+        for (let index = 0; index < btComposer; index++) {
+            box.innerHTML += '<div class="cell bt-composer"></div>';
+        }
+        for (let index = 0; index < btTitle; index++) {
+            box.innerHTML += '<div class="cell bt-title"></div>';
+        }
+        for (let index = 0; index < btBoth; index++) {
+            box.innerHTML += '<div class="cell bt-both"></div>';
+        }
+
+        return box;
+    }
+
     createLabels(stats) {
         let total;
         if (stats) {
@@ -232,9 +266,13 @@ customElements.define("stat-display", class extends HTMLElement {
         } else if (filter.startsWith('current-')) {
             stats = statsArray['by_current_genre'][filter.slice(8)];            
         }
-        console.log(stats);
+        // console.log(stats);
 
-        const waffle = this.createWaffle(120, stats);
+        const total = [statsArray['total']['unknown'], statsArray['total']['known'], statsArray['total']['bt-false'], statsArray['total']['bt-composer'],statsArray['total']['bt-title'],statsArray['total']['bt-both']].reduce(((a, b) => a + b), 0);
+
+        console.log(total);
+
+        const waffle = this.createWaffleAlt(120, stats, total);
         const labels = this.createLabels(stats);
 
         const box = document.createElement('div');
