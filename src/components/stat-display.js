@@ -201,18 +201,18 @@ customElements.define("stat-display", class extends HTMLElement {
         console.log(userTitles, stats);
         const waffle = this.createWaffle(120, stats, 'self');
         
-        const box = document.createElement('div');
-        box.setAttribute('class', 'd-flex flex-column gap-4 p-1');
-        box.append(waffle);
-        
         const total = [stats['unknown'], stats['known'], stats['bt-false'], stats['bt-composer'],stats['bt-title'],stats['bt-both']].reduce(((a, b) => a + b), 0);
         const message = document.createElement('p');
         message.innerText = `Vous avez déjà découvert ${total} pièces.
         Votre score est de ${stats['bt-composer'] + stats['bt-title'] + 2*stats['bt-both']}/${total*2} (Max. 228).
         `
+        
+        const box = document.createElement('div');
+        box.setAttribute('class', 'd-flex flex-column gap-4 p-1');
+        box.append(waffle, message);
 
         this.innerHTML = '';
-        this.append(box, message);
+        this.append(box);
     }
 
     async loadGlobalStats(filter) {
