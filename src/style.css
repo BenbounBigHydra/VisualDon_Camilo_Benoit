@@ -66,34 +66,39 @@ img#scroll-arrow {
     font-size: 0.8rem;
 }
 
-.unknown {
+.cell.unknown {
     background-color: #7A7067;
     outline: #7A7067;
 }
-.known {
+.cell.known {
     background-color: #D44127;
     outline-color: #D44127;
 }
-.bt-false {
+.cell.bt-false {
     background-color: #EAAA5C;
     outline: #EAAA5C;
 }
-.bt-composer {
+.cell.bt-composer {
     background-color: #2D5D8B;
     outline: #2D5D8B;
 }
-.bt-title {
+.cell.bt-title {
     background-color: #A3C3E1;
     outline: #A3C3E1;
 }
-.bt-both {
+.cell.bt-both {
     background-color: #A1B441;
     outline: #A1B441;
 }
 
-.empty {
+.cell.empty {
     background-color: #e8e1db;
     outline: #e8e1db;
+}
+
+.cell.faded {
+    filter: opacity(40%) saturate(60%) sepia(30%);
+
 }
 
 .highlight {
