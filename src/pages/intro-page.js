@@ -25,9 +25,10 @@ customElements.define('intro-page', class extends HTMLElement {
 
     async render() {
         
-        this.setAttribute('class', 'rounded-3 p-4 bg-light border border-primary-subtle border-2');
+        this.setAttribute('class', 'rounded-3 p-4 bg-light border border-primary-subtle border-2 text-center');
         this.innerHTML = `
-            <h1>CLASSIK</h1>
+            <h1 class="fw-bold">CLASSIK</h1>
+            <h3 class="my-3">À quel point connais-tu la musique classique ?</h3>
             <p>Le but de cette représentation est d'explorer l'impact de la musique savante, communément appelée musique classique, sur la société actuelle à travers le degré de connaissance de différentes oeuvres et compositeurs.trices classiques. Nous voulons comprendre la corrélation possible entre l'éducation musicale d'une personne ainsi que ses préférences musicales et le degré de connaissance de cette personne vis-à-vis de la musique savante.</p>
             <p style="font-style: italic;">Le terme "musique classique" sera régulièrement utilisé dans ce projet pour désigner la "musique savante".</p>
         `
