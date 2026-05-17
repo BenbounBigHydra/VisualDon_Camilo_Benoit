@@ -11,7 +11,7 @@ Sources de données :
 * Portrait compositeurs - [Wikimedia Commons](https://commons.wikimedia.org/wiki/Main_Page) : En complément des informations, nous sommes allé récupérer le liens des portraits des compositeurs sur wikimedia afin de les ajouter à nos données.
 * Source des fichiers audio - [Spotify Api](https://developer.spotify.com/documentation/web-api) La collecte de fichiers audio est un sujet complexe car il est difficile de savoir ce que nous avons le droit d'utiliser ou non. Nous nous sommes finalement décidé à utiliser l'api de Spotify qui fourni un extrait gratuit de chacun de ses morceaux, nous étions donc garanti de tous les y trouver. De plus, Spotify propose une documentation complète de l'utilisation de son api.
 
-Toutes ces données ont été rassemblées dans notre propre base de donnée créée pour ce projet.
+Toutes ces données ont été rassemblées dans [notre propre base de donnée](https://github.com/calimomilo/visualdon-backend) créée pour ce projet.
 
 ## But
 Le but de cette représentation est d'explorer l'impact de la musique savante, communément appelée musique classique, sur la société actuelle à travers le degré de connaissance de différentes oeuvres et compositeurs.trices classiques. Nous voulons comprendre la corrélation possible entre l'éducation musicale d'une personne ainsi que ses préférences musicales et le degré de connaissance de cette personne vis-à-vis de la musique savante.
