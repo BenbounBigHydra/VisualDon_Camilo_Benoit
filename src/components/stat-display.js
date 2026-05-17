@@ -104,65 +104,65 @@ customElements.define("stat-display", class extends HTMLElement {
         const labels = document.createElement('div');
         labels.setAttribute('class', 'd-flex flex-column gap-2');
         labels.innerHTML = stats ? `
-            <div class="d-flex align-items-center gap-2">
+            <div class="d-flex align-items-center">
                 <div class="cell bt-both label"></div>
-                <p class="m-0 bt-both label">Deviné le compositeur et le titre : ${stats['bt-both']} réponses (${Math.round(stats['bt-both']*100/total)}%)</p>
+                <p class="m-0 bt-both ps-2 label">Deviné le compositeur et le titre : ${stats['bt-both']} réponses (${Math.round(stats['bt-both']*100/total)}%)</p>
             </div>
 
-            <div class="d-flex align-items-center gap-2">
+            <div class="d-flex align-items-center">
                 <div class="cell bt-title label"></div>
-                <p class="m-0 bt-title label">Deviné le titre : ${stats['bt-title']} réponses (${Math.round(stats['bt-title']*100/total)}%)</p>
+                <p class="m-0 bt-title ps-2 label">Deviné le titre : ${stats['bt-title']} réponses (${Math.round(stats['bt-title']*100/total)}%)</p>
             </div>
 
-            <div class="d-flex align-items-center gap-2">
+            <div class="d-flex align-items-center">
                 <div class="cell bt-composer label"></div>
-                <p class="m-0 bt-composer label">Deviné le compositeur : ${stats['bt-composer']} réponses (${Math.round(stats['bt-composer']*100/total)}%)</p>
+                <p class="m-0 bt-composer ps-2 label">Deviné le compositeur : ${stats['bt-composer']} réponses (${Math.round(stats['bt-composer']*100/total)}%)</p>
             </div>
 
-            <div class="d-flex align-items-center gap-2">
+            <div class="d-flex align-items-center">
                 <div class="cell bt-false label"></div>
-                <p class="m-0 bt-false label">Deviné ni le compositeur ni le titre : ${stats['bt-false']} réponses (${Math.round(stats['bt-false']*100/total)}%)</p>
+                <p class="m-0 bt-false ps-2 label">Deviné ni le compositeur ni le titre : ${stats['bt-false']} réponses (${Math.round(stats['bt-false']*100/total)}%)</p>
             </div>
 
-            <div class="d-flex align-items-center gap-2">
+            <div class="d-flex align-items-center">
                 <div class="cell known label"></div>
-                <p class="m-0 known label">Déjà entendu : ${stats['known']} réponses (${Math.round(stats['known']*100/total)}%)</p>
+                <p class="m-0 known ps-2 label">Déjà entendu : ${stats['known']} réponses (${Math.round(stats['known']*100/total)}%)</p>
             </div>
 
-            <div class="d-flex align-items-center gap-2">
+            <div class="d-flex align-items-center">
                 <div class="cell unknown label"></div>
-                <p class="m-0 unknown label">Jamais entendu : ${stats['unknown']} réponses (${Math.round(stats['unknown']*100/total)}%)</p>
+                <p class="m-0 unknown ps-2 label">Jamais entendu : ${stats['unknown']} réponses (${Math.round(stats['unknown']*100/total)}%)</p>
             </div>
         `
         : `
-            <div class="d-flex align-items-center gap-2">
+            <div class="d-flex align-items-center">
                 <div class="cell bt-both label"></div>
-                <p class="m-0 bt-both label">Deviné le compositeur et le titre</p>
+                <p class="m-0 bt-both ps-2 label">Deviné le compositeur et le titre</p>
             </div>
 
-            <div class="d-flex align-items-center gap-2">
+            <div class="d-flex align-items-center">
                 <div class="cell bt-title label"></div>
-                <p class="m-0 bt-title label">Deviné le titre</p>
+                <p class="m-0 bt-title ps-2 label">Deviné le titre</p>
             </div>
 
-            <div class="d-flex align-items-center gap-2">
+            <div class="d-flex align-items-center">
                 <div class="cell bt-composer label"></div>
-                <p class="m-0 bt-composer label">Deviné le compositeur</p>
+                <p class="m-0 bt-composer ps-2 label">Deviné le compositeur</p>
             </div>
 
-            <div class="d-flex align-items-center gap-2">
+            <div class="d-flex align-items-center">
                 <div class="cell bt-false label"></div>
-                <p class="m-0 bt-false label">Deviné ni le compositeur ni le titre</p>
+                <p class="m-0 bt-false ps-2 label">Deviné ni le compositeur ni le titre</p>
             </div>
 
-            <div class="d-flex align-items-center gap-2">
+            <div class="d-flex align-items-center">
                 <div class="cell known label"></div>
-                <p class="m-0 known label">Déjà entendu</p>
+                <p class="m-0 known ps-2 label">Déjà entendu</p>
             </div>
 
-            <div class="d-flex align-items-center gap-2">
+            <div class="d-flex align-items-center">
                 <div class="cell unknown label"></div>
-                <p class="m-0 unknown label">Jamais entendu</p>
+                <p class="m-0 unknown ps-2 label">Jamais entendu</p>
             </div>
         `
 
@@ -240,8 +240,8 @@ customElements.define("stat-display", class extends HTMLElement {
         
         const total = [stats['unknown'], stats['known'], stats['bt-false'], stats['bt-composer'],stats['bt-title'],stats['bt-both']].reduce(((a, b) => a + b), 0);
         const message = document.createElement('p');
-        message.innerText = `Vous avez déjà découvert ${total} pièces.
-        Votre score est de ${stats['bt-composer'] + stats['bt-title'] + 2*stats['bt-both']}/${total*2} (Max. 228).
+        message.innerText = `Tu as déjà découvert ${total} pièces.
+        Ton score actuel est de ${stats['bt-composer'] + stats['bt-title'] + 2*stats['bt-both']}.
         `
         
         const box = document.createElement('div');
