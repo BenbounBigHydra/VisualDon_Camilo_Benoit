@@ -10,6 +10,7 @@ Sources de données :
 * Infos morceaux - [Wikipedia](https://fr.wikipedia.org/) : Cette librairie participative recense toutes les informations des morceaux que nous avons sélectionnés, nous avons récupéré manuellement la date de composition ainsi qu'un paragraphe descriptif de ceux-ci.
 * Portrait compositeurs - [Wikimedia Commons](https://commons.wikimedia.org/wiki/Main_Page) : En complément des informations, nous sommes allé récupérer le liens des portraits des compositeurs sur wikimedia afin de les ajouter à nos données.
 * Source des fichiers audio - [Spotify Api](https://developer.spotify.com/documentation/web-api) La collecte de fichiers audio est un sujet complexe car il est difficile de savoir ce que nous avons le droit d'utiliser ou non. Nous nous sommes finalement décidé à utiliser l'api de Spotify qui fourni un extrait gratuit de chacun de ses morceaux, nous étions donc garanti de tous les y trouver. De plus, Spotify propose une documentation complète de l'utilisation de son api.
+
 Toutes ces données ont été rassemblées dans notre propre base de donnée créée pour ce projet.
 
 ## But
