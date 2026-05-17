@@ -4,6 +4,12 @@
 Nous nous sommes posées la question de la place de la musique classique dans le paysiage musical actuel. Y a-t-il des tendances qui se dégagent et que peuvent-elles nous apprendre sur notre fonctionnement en tant que société. <br>
 _Le terme "musique classique" sera régulièrement utilisé dans ce projet pour désigner la "musique savante"._
 
+## But
+Le but de cette représentation est d'explorer l'impact de la musique savante, communément appelée musique classique, sur la société actuelle à travers le degré de connaissance de différentes oeuvres et compositeurs.trices classiques. Nous voulons comprendre la corrélation possible entre l'éducation musicale d'une personne ainsi que ses préférences musicales et le degré de connaissance de cette personne vis-à-vis de la musique savante.
+
+## Résultat
+Le résultat de ce projet est disponible à l'adresse suivante : https://classical-visdon.netlify.app/
+
 ## Description
 Sources de données :
 * [Open Opus](https://openopus.org/) : API contenant de nombreuses métadonnées concernant des compositeurs.trices de musique classique et leurs oeuvres. Elle propose également deux catégories de compositeurs.trices et oeuvres : Populaires et Essentielles. Comme le projet est encore relativement récent, le catalogue mis à disposition est encore limité ; en particulier, seules des oeuvres du domaine public sont recensées et il peut donc manquer des compositeurs.trices et oeuvres récentes.
@@ -11,10 +17,6 @@ Sources de données :
     * [Wikimedia Commons](https://commons.wikimedia.org/wiki/Main_Page)
     * [Free Music Archive](https://freemusicarchive.org/genre/Classical/) 
     * [Classical Archives](https://www.classicalarchives.com/newca/#!/)
-
-
-## But
-Le but de cette représentation est d'explorer l'impact de la musique savante, communément appelée musique classique, sur la société actuelle à travers le degré de connaissance de différentes oeuvres et compositeurs.trices classiques. Nous voulons comprendre la corrélation possible entre l'éducation musicale d'une personne ainsi que ses préférences musicales et le degré de connaissance de cette personne vis-à-vis de la musique savante.
 
 ## Références
 
